@@ -595,6 +595,18 @@
     margin-left:6px;
   }
 
+  .dept-tag{
+    font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    border-radius:999px;padding:2px 8px;margin-left:6px;display:inline-block;
+  }
+  .chip.dept-chip{font-size:.76rem;font-weight:700;text-transform:none;letter-spacing:0;}
+  .dept-tag.dept-fiscal, .chip.dept-chip.dept-fiscal{background:#dbe6fb;color:#1f4fa0;}
+  .dept-tag.dept-contabil, .chip.dept-chip.dept-contabil{background:#ece3fb;color:#6b3fa0;}
+  .dept-tag.dept-agro, .chip.dept-chip.dept-agro{background:#dff3df;color:#256a2c;}
+  :root[data-theme="dark"] .dept-tag.dept-fiscal, :root[data-theme="dark"] .chip.dept-chip.dept-fiscal{background:#173463;color:#a9c6ff;}
+  :root[data-theme="dark"] .dept-tag.dept-contabil, :root[data-theme="dark"] .chip.dept-chip.dept-contabil{background:#3a2463;color:#d7c1ff;}
+  :root[data-theme="dark"] .dept-tag.dept-agro, :root[data-theme="dark"] .chip.dept-chip.dept-agro{background:#1d3d1f;color:#adeab0;}
+
   .userlist{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto;}
   .userlist li{
     display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -681,7 +693,7 @@
 
   .modal-report{max-width:800px;}
   .report-filters{
-    display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px 12px;
+    display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px 12px;
     margin-bottom:16px;
   }
   .report-filters .field-label{margin:0 0 4px;}
@@ -746,6 +758,12 @@
         <input type="search" id="searchInput" placeholder="Buscar atividade, empresa ou CNPJ..." aria-label="Buscar atividade">
         <select id="filterResp" aria-label="Filtrar por responsável"><option value="all">Todos os responsáveis</option></select>
         <select id="filterEmpresa" aria-label="Filtrar por empresa"><option value="all">Todas as empresas</option></select>
+        <select id="filterDept" aria-label="Filtrar por departamento" hidden>
+          <option value="all">Todos os departamentos</option>
+          <option value="fiscal">Fiscal</option>
+          <option value="contabil">Contábil</option>
+          <option value="agro">Agro</option>
+        </select>
         <select id="filterStatus" aria-label="Filtrar por status">
           <option value="all">Todos os status</option>
           <option value="pending">Pendentes</option>
@@ -807,7 +825,7 @@
 <div id="toastRoot" class="toast-root" aria-live="polite"></div>
 <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Voltar ao topo" title="Voltar ao topo" hidden>↑</button>
 
-<script id="app-state" type="application/json">{"title": "Planejamento Fiscal", "updatedAt": "2026-09-09T17:03:04Z", "users": [{"id": "u_admin", "name": "Jonatas1", "role": "admin"}, {"id": "u_wendel", "name": "Wendel", "role": "colaborador"}, {"id": "ajs0dmc6mthj93dv", "name": "Anikely123", "role": "colaborador"}], "activities": [{"id": "axms8xgsmthj72yx", "name": "ICMS ST - Suzuki", "responsible": "Anikely", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "02/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a4ib77mkmthj72yx", "name": "Depreciação", "responsible": "Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "04/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aqglls4pmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "actjp9ermthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aa2spxvcmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ayo3842vmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "alwe9iyjmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "actkpxpnmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a9x0hm3rmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "arv9dvccmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a7591khumthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "am7b3iwnmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "apk447aymthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "adbsldcdmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ax52m91qmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ahs82hrimthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a22r50u4mthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a521opdsmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "auimrk8xmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aot6keubmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aws1z779mthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5chndqimthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aid9xdobmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aalg224zmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "13/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "an1lmezmmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "13/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5et4e1gmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "avbgeoxvmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a2gcfky8mthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "asdk9ufimthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "axzx2d75mthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6al2c7kmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a4750hr4mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a1my8xymmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a0vikck5mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5byor0vmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "agviji8ymthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "amfps186mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aqklsjppmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aywxzzgrmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "az9qvhqnmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "amud4n7gmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "azws2jhnmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aihrmdoqmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a8ussjx4mthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6p4nkujmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5ewbq3zmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aicncnu8mthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aap1ql2xmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aw07ws64mthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aciwjtzumthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a7jzsi7pmthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "akst350lmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "19/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a1v206avmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aijwyk5gmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aoalrzw1mthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "afmdx1jzmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "atmuzc8nmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "abcaq923mthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "audrj1o9mthj72yx", "name": "Validar SAAM (01 a 20)", "responsible": "Anikely - Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6q12ncomthj72yx", "name": "Depreciação", "responsible": "Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ao6ttev2mthj72yx", "name": "Conferir Diariamente", "responsible": "Anikely - Wendel", "company": "Todas", "cnpj": "Dootax", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "au6udhllmthj72yx", "name": "Verificar pendências Pagamentos DIFAL", "responsible": "Todos", "company": "Todas", "cnpj": "Todas", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}]}</script>
+<script id="app-state" type="application/json">{"title": "Planejamento Fiscal", "updatedAt": "2026-09-22T12:12:22Z", "users": [{"id": "u_admin", "name": "Jonatas1", "role": "admin"}, {"id": "u_wendel", "name": "Wendel", "role": "colaborador"}, {"id": "ajs0dmc6mthj93dv", "name": "Anikely123", "role": "colaborador"}], "activities": [{"id": "axms8xgsmthj72yx", "name": "ICMS ST - Suzuki", "responsible": "Anikely", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "02/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a4ib77mkmthj72yx", "name": "Depreciação", "responsible": "Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "04/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aqglls4pmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "actjp9ermthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aa2spxvcmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ayo3842vmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "alwe9iyjmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "actkpxpnmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a9x0hm3rmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "arv9dvccmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a7591khumthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "am7b3iwnmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "apk447aymthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "adbsldcdmthj72yx", "name": "Declaração REST/DMS", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ax52m91qmthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ahs82hrimthj72yx", "name": "Apuração e declaração EFD ICMS/IPI", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "08/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a22r50u4mthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a521opdsmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "auimrk8xmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aot6keubmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "10/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aws1z779mthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5chndqimthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aid9xdobmthj72yx", "name": "EFD REINF", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "11/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aalg224zmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "13/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "an1lmezmmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "13/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5et4e1gmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "avbgeoxvmthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a2gcfky8mthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "asdk9ufimthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "axzx2d75mthj72yx", "name": "Apuração e declaração EFD Contribuições", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6al2c7kmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a4750hr4mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a1my8xymmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a0vikck5mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5byor0vmthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "agviji8ymthj72yx", "name": "CND's", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "amfps186mthj72yx", "name": "CND's", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "14/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aqklsjppmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aywxzzgrmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "az9qvhqnmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "amud4n7gmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "azws2jhnmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aihrmdoqmthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a8ussjx4mthj72yx", "name": "MIT - DCTFWeb", "responsible": "Anikely", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "15/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6p4nkujmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a5ewbq3zmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aicncnu8mthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aap1ql2xmthj72yx", "name": "Malha Fina", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aw07ws64mthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aciwjtzumthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a7jzsi7pmthj72yx", "name": "Malha Fina", "responsible": "Anikely", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "16/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "akst350lmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0001-66", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "19/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a1v206avmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0002-47", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aijwyk5gmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA VEÍCULOS LTDA", "cnpj": "01.026.483/0003-28", "municipio": "ITABERAI", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "aoalrzw1mthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA MOTORS LTDA", "cnpj": "26.452.796/0001-07", "municipio": "SÃO LUIS M.B.", "estado": "GO", "dueDate": "20/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "afmdx1jzmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA FRANCE VEÍCULOS LTDA", "cnpj": "22.424.304/0001-19", "municipio": "ANAPOLIS", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "atmuzc8nmthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "NASA MOTOS LTDA", "cnpj": "63.674.874/0001-44", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "abcaq923mthj72yx", "name": "Conferencia Notas Fiscais (01 a 25)", "responsible": "Wendel", "company": "FELD", "cnpj": "53.463.361/0001-30", "municipio": "GOIÂNIA", "estado": "GO", "dueDate": "24/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "audrj1o9mthj72yx", "name": "Validar SAAM (01 a 20)", "responsible": "Anikely - Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "a6q12ncomthj72yx", "name": "Depreciação", "responsible": "Wendel", "company": "Todas", "cnpj": "Todas", "municipio": "Todas", "estado": "Todas", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "ao6ttev2mthj72yx", "name": "Conferir Diariamente", "responsible": "Anikely - Wendel", "company": "Todas", "cnpj": "Dootax", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}, {"id": "au6udhllmthj72yx", "name": "Verificar pendências Pagamentos DIFAL", "responsible": "Todos", "company": "Todas", "cnpj": "Todas", "municipio": "", "estado": "", "dueDate": "30/09/2026", "status": "pending", "completedBy": null, "completedAt": null, "comment": null, "hadGuide": null, "guideSent": null}]}</script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -838,6 +856,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   if (!STATE.users) STATE.users = [];
   if (!STATE.goals) STATE.goals = [];
   if (!STATE.tickets) STATE.tickets = [];
+  if (!STATE.activities) STATE.activities = [];
+  STATE.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
+  STATE.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; });
+  STATE.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; });
   var firestoreReady = false;
   var firestoreError = false;
   var docRef = null;
@@ -895,6 +917,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     target: ['quantidade alvo', 'meta alvo', 'alvo', 'quantidade', 'valor alvo', 'target', 'qtd alvo'],
     dueDate: ['prazo', 'data limite', 'datalimite', 'vencimento', 'data', 'data de vencimento']
   };
+  var DEPARTMENTS = [
+    { key: 'fiscal', label: 'Fiscal' },
+    { key: 'contabil', label: 'Contábil' },
+    { key: 'agro', label: 'Agro' }
+  ];
+  var DEFAULT_DEPARTMENT = 'fiscal';
   var currentView = 'atividades';
   var WEEKDAY_LABELS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   var WEEKDAY_LABELS_FULL = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
@@ -1026,6 +1054,44 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     try { localStorage.setItem(LOGIN_KEY, name); } catch (e) {}
   }
 
+  // ---------- departments (Fiscal / Contábil / Agro) ----------
+  //
+  // Every user (except admins, who see everything) belongs to one department.
+  // Every activity and goal belongs to one department too. A non-admin user only
+  // ever sees data tagged with their own department — admins see all of it, plus
+  // an optional department filter to slice the view.
+
+  function departmentLabel(key) {
+    var found = DEPARTMENTS.filter(function (d) { return d.key === key; })[0];
+    return found ? found.label : DEPARTMENTS[0].label;
+  }
+  function userDepartment(user) { return (user && user.department) || DEFAULT_DEPARTMENT; }
+  function itemDepartment(item) { return (item && item.department) || DEFAULT_DEPARTMENT; }
+  function visibleActivitiesRaw() {
+    var user = getCurrentUser();
+    if (isAdmin(user)) return STATE.activities;
+    var dept = userDepartment(user);
+    return STATE.activities.filter(function (a) { return itemDepartment(a) === dept; });
+  }
+  function visibleGoalsRaw() {
+    var user = getCurrentUser();
+    if (isAdmin(user)) return STATE.goals;
+    var dept = userDepartment(user);
+    return STATE.goals.filter(function (g) { return itemDepartment(g) === dept; });
+  }
+  function departmentSelectOptions(current) {
+    return DEPARTMENTS.map(function (d) {
+      return '<option value="' + d.key + '"' + (d.key === current ? ' selected' : '') + '>' + d.label + '</option>';
+    }).join('');
+  }
+  // When admin is currently filtering the activities list by a specific department,
+  // default new-activity forms to that department too — saves a click in the common case.
+  function defaultDeptForNewItem() {
+    var el = document.getElementById('filterDept');
+    if (el && el.value && el.value !== 'all') return el.value;
+    return DEFAULT_DEPARTMENT;
+  }
+
   // ---------- persistence: Firebase (Firestore + Anonymous Auth) ----------
   //
   // Every visitor signs in anonymously and shares a single Firestore document
@@ -1077,6 +1143,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
             if (!STATE.users) STATE.users = [];
             if (!STATE.goals) STATE.goals = [];
             if (!STATE.tickets) STATE.tickets = [];
+            if (!STATE.activities) STATE.activities = [];
+            STATE.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
+            STATE.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; });
+            STATE.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; });
             firestoreReady = true;
             firestoreError = false;
             render();
@@ -1180,17 +1250,24 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return { items: items, detected: cols, monthFirstFixed: monthFirstFixed };
   }
 
-  function mergeActivities(existing, incoming) {
+  // Only activities already tagged with importDept are candidates for matching/removal —
+  // activities belonging to other departments are passed through completely untouched.
+  // Without this, importing one department's spreadsheet would wipe out every other
+  // department's activities, since they simply don't appear in that file.
+  function mergeActivities(existing, incoming, importDept) {
+    var inDept = existing.filter(function (a) { return itemDepartment(a) === importDept; });
+    var outDept = existing.filter(function (a) { return itemDepartment(a) !== importDept; });
     var byKey = {};
-    existing.forEach(function (a) { byKey[keyFor(a.name, a.responsible, a.company, a.cnpj)] = a; });
+    inDept.forEach(function (a) { byKey[keyFor(a.name, a.responsible, a.company, a.cnpj)] = a; });
     var seen = {};
-    var merged = incoming.map(function (row) {
+    var mergedInDept = incoming.map(function (row) {
       var k = keyFor(row.name, row.responsible, row.company, row.cnpj);
       seen[k] = true;
       var prev = byKey[k];
       return {
         id: prev ? prev.id : uid(),
         name: row.name,
+        department: importDept,
         responsible: row.responsible,
         company: row.company,
         cnpj: row.cnpj,
@@ -1208,12 +1285,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         audit: prev ? (prev.audit || []) : []
       };
     });
-    var removed = existing.filter(function (a) { return !seen[keyFor(a.name, a.responsible, a.company, a.cnpj)]; });
+    var removed = inDept.filter(function (a) { return !seen[keyFor(a.name, a.responsible, a.company, a.cnpj)]; });
     var addedCount = 0;
     incoming.forEach(function (row) {
       if (!byKey[keyFor(row.name, row.responsible, row.company, row.cnpj)]) addedCount++;
     });
-    return { merged: merged, addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
+    return { merged: outDept.concat(mergedInDept), addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
   }
 
   // ---------- metas (goals) ----------
@@ -1266,17 +1343,21 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return { items: items, detected: cols, monthFirstFixed: monthFirstFixed };
   }
 
-  function mergeGoals(existing, incoming) {
+  // Same department-scoping as mergeActivities — see the comment there.
+  function mergeGoals(existing, incoming, importDept) {
+    var inDept = existing.filter(function (g) { return itemDepartment(g) === importDept; });
+    var outDept = existing.filter(function (g) { return itemDepartment(g) !== importDept; });
     var byKey = {};
-    existing.forEach(function (g) { byKey[goalKeyFor(g.name, g.responsible, g.company)] = g; });
+    inDept.forEach(function (g) { byKey[goalKeyFor(g.name, g.responsible, g.company)] = g; });
     var seen = {};
-    var merged = incoming.map(function (row) {
+    var mergedInDept = incoming.map(function (row) {
       var k = goalKeyFor(row.name, row.responsible, row.company);
       seen[k] = true;
       var prev = byKey[k];
       return {
         id: prev ? prev.id : uid(),
         name: row.name,
+        department: importDept,
         responsible: row.responsible,
         company: row.company,
         target: row.target,
@@ -1286,12 +1367,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         lastUpdatedAt: prev ? prev.lastUpdatedAt : null
       };
     });
-    var removed = existing.filter(function (g) { return !seen[goalKeyFor(g.name, g.responsible, g.company)]; });
+    var removed = inDept.filter(function (g) { return !seen[goalKeyFor(g.name, g.responsible, g.company)]; });
     var addedCount = 0;
     incoming.forEach(function (row) {
       if (!byKey[goalKeyFor(row.name, row.responsible, row.company)]) addedCount++;
     });
-    return { merged: merged, addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
+    return { merged: outDept.concat(mergedInDept), addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
   }
 
   // ---------- modal / toast ----------
@@ -1361,16 +1442,19 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       var adminCount = STATE.users.filter(function (x) { return x.role === 'admin'; }).length;
       var isLastAdmin = u.role === 'admin' && adminCount <= 1;
       return (
-        '<li><span class="u-name">' + escapeHtml(u.name) + (u.role === 'admin' ? '<span class="role-tag">admin</span>' : '') + '</span>' +
+        '<li><span class="u-name">' + escapeHtml(u.name) +
+        '<span class="dept-tag dept-' + (u.department || 'fiscal') + '">' + departmentLabel(u.department) + '</span>' +
+        (u.role === 'admin' ? '<span class="role-tag">admin</span>' : '') + '</span>' +
         '<button class="u-remove" type="button" data-remove-user="' + escapeHtml(u.id) + '"' + (isLastAdmin ? ' disabled title="É preciso manter ao menos um administrador"' : '') + '>remover</button></li>'
       );
     }).join('');
     openModal(
       '<h3>Gerenciar usuários</h3>' +
-      '<p>Somente os nomes cadastrados aqui aparecem na tela de entrada.</p>' +
+      '<p>Somente os nomes cadastrados aqui aparecem na tela de entrada. O departamento controla quais atividades e metas a pessoa enxerga — administradores sempre veem tudo.</p>' +
       '<ul class="userlist" id="userListEl">' + (rows || '<li class="muted" style="justify-content:center;">Nenhum usuário ainda</li>') + '</ul>' +
       '<form class="add-user-form" id="addUserForm">' +
       '<input type="text" id="newUserName" placeholder="Nome" maxlength="60" required>' +
+      '<select id="newUserDept" title="Departamento" aria-label="Departamento">' + departmentSelectOptions(DEFAULT_DEPARTMENT) + '</select>' +
       '<select id="newUserRole">' +
       '<option value="colaborador">Colaborador</option>' +
       '<option value="admin">Administrador</option>' +
@@ -1402,7 +1486,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         showToast('Já existe um usuário com esse nome.', 'error');
         return;
       }
-      STATE.users.push({ id: uid(), name: name, role: document.getElementById('newUserRole').value });
+      STATE.users.push({ id: uid(), name: name, role: document.getElementById('newUserRole').value, department: document.getElementById('newUserDept').value });
       persist();
       renderAdminPanel();
     });
@@ -1421,12 +1505,19 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function openAddActivityModal() {
+    var user = getCurrentUser();
+    var admin = isAdmin(user);
+    var deptField = admin
+      ? '<label class="field-label" for="newActDept">Departamento</label>' +
+        '<select id="newActDept">' + departmentSelectOptions(defaultDeptForNewItem()) + '</select>'
+      : '';
     openModal(
       '<h3>Nova atividade</h3>' +
       '<form id="addActivityForm">' +
       '<label class="field-label" for="newActName">Atividade</label>' +
       '<input type="text" id="newActName" placeholder="Nome da atividade" maxlength="200" autocomplete="off">' +
       '<div class="field-error" id="newActNameError">Informe o nome da atividade.</div>' +
+      deptField +
       '<label class="field-label" for="newActResp">Responsável</label>' +
       '<input type="text" id="newActResp" placeholder="Responsável" maxlength="120" autocomplete="off">' +
       '<label class="field-label" for="newActCompany">Empresa</label>' +
@@ -1464,6 +1555,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       var act = {
         id: uid(),
         name: name,
+        department: admin ? document.getElementById('newActDept').value : userDepartment(user),
         responsible: document.getElementById('newActResp').value.trim(),
         company: document.getElementById('newActCompany').value.trim(),
         cnpj: document.getElementById('newActCnpj').value.trim(),
@@ -1499,12 +1591,19 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function openAddGoalModal() {
+    var goalUser = getCurrentUser();
+    var goalAdmin = isAdmin(goalUser);
+    var goalDeptField = goalAdmin
+      ? '<label class="field-label" for="newGoalDept">Departamento</label>' +
+        '<select id="newGoalDept">' + departmentSelectOptions(DEFAULT_DEPARTMENT) + '</select>'
+      : '';
     openModal(
       '<h3>Nova meta</h3>' +
       '<form id="addGoalForm">' +
       '<label class="field-label" for="newGoalName">Meta</label>' +
       '<input type="text" id="newGoalName" placeholder="Nome da meta" maxlength="200" autocomplete="off">' +
       '<div class="field-error" id="newGoalNameError">Informe o nome da meta.</div>' +
+      goalDeptField +
       '<label class="field-label" for="newGoalResp">Responsável</label>' +
       '<input type="text" id="newGoalResp" placeholder="Responsável" maxlength="120" autocomplete="off">' +
       '<label class="field-label" for="newGoalCompany">Empresa</label>' +
@@ -1542,6 +1641,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       var goal = {
         id: uid(),
         name: name,
+        department: goalAdmin ? document.getElementById('newGoalDept').value : userDepartment(goalUser),
         responsible: document.getElementById('newGoalResp').value.trim(),
         company: document.getElementById('newGoalCompany').value.trim(),
         target: target,
@@ -1615,7 +1715,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         return;
       }
       if (parsed.error) { showToast(parsed.error, 'error'); return; }
-      var merge = mergeGoals(STATE.goals, parsed.items);
+      var merge = mergeGoals(STATE.goals, parsed.items, pendingImportDept);
       openGoalImportPreview(parsed, merge, function (confirmed) {
         if (!confirmed) return;
         STATE.goals = merge.merged;
@@ -1635,6 +1735,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (parsed.monthFirstFixed) warnings += '<li>A coluna de prazo desta planilha estava no formato mês/dia (ex.: 8/13 = 13 de agosto) — as datas foram convertidas automaticamente para dia/mês/ano.</li>';
     openModal(
       '<h3>Confirmar importação de metas</h3>' +
+      '<p>Departamento: <strong>' + departmentLabel(pendingImportDept) + '</strong></p>' +
       '<p>Revise o resumo antes de aplicar as mudanças. O progresso já registrado de metas existentes é mantido.</p>' +
       '<ul class="import-summary">' +
       '<li><span>Metas novas</span><strong class="mono">' + merge.addedCount + '</strong></li>' +
@@ -1731,6 +1832,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (parsed.monthFirstFixed) warnings += '<li>A coluna de prazo desta planilha estava no formato mês/dia (ex.: 8/13 = 13 de agosto) — as datas foram convertidas automaticamente para dia/mês/ano.</li>';
     openModal(
       '<h3>Confirmar importação</h3>' +
+      '<p>Departamento: <strong>' + departmentLabel(pendingImportDept) + '</strong></p>' +
       '<p>Revise o resumo antes de aplicar as mudanças. Todos que têm esta página aberta verão a lista atualizada.</p>' +
       '<ul class="import-summary">' +
       '<li><span>Atividades novas</span><strong class="mono">' + merge.addedCount + '</strong></li>' +
@@ -1750,11 +1852,45 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   // ---------- calendar ----------
 
   var calYear, calMonth, calSelectedKey;
-  var reportFilters = { from: '', to: '', resp: 'all', company: 'all' };
+  var reportFilters = { from: '', to: '', resp: 'all', company: 'all', dept: 'all' };
+  var pendingImportDept = DEFAULT_DEPARTMENT;
+
+  // Asks the admin which department this spreadsheet belongs to before opening the
+  // file picker. New rows are tagged with that department; existing rows in other
+  // departments are never touched by the import (see mergeActivities/mergeGoals).
+  function openImportDepartmentPicker(kind) {
+    openModal(
+      '<h3>Importar para qual departamento?</h3>' +
+      '<p>As atividades novas desta planilha serão associadas ao departamento escolhido. Atividades de outros departamentos não são afetadas por este import.</p>' +
+      '<div class="radio-group" data-setting="importDept">' +
+      DEPARTMENTS.map(function (d) {
+        return '<button type="button" class="radio-btn" data-value="' + d.key + '" aria-pressed="' + (d.key === pendingImportDept) + '">' + d.label + '</button>';
+      }).join('') +
+      '</div>' +
+      '<div class="modal-actions">' +
+      '<button class="btn btn-ghost" type="button" id="importDeptCancel">Cancelar</button>' +
+      '<button class="btn btn-primary" type="button" id="importDeptContinue">Escolher arquivo</button>' +
+      '</div>'
+    );
+    var btns = document.querySelectorAll('#modalRoot [data-setting="importDept"] .radio-btn');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function (e) {
+        pendingImportDept = e.currentTarget.getAttribute('data-value');
+        var all = document.querySelectorAll('#modalRoot [data-setting="importDept"] .radio-btn');
+        for (var j = 0; j < all.length; j++) all[j].setAttribute('aria-pressed', String(all[j] === e.currentTarget));
+      });
+    }
+    document.getElementById('importDeptCancel').addEventListener('click', closeModal);
+    document.getElementById('importDeptContinue').addEventListener('click', function () {
+      closeModal();
+      if (kind === 'goals') document.getElementById('goalFileInput').click();
+      else document.getElementById('fileInput').click();
+    });
+  }
 
   function buildDueMap() {
     var map = {};
-    STATE.activities.forEach(function (act) {
+    visibleActivitiesRaw().forEach(function (act) {
       var d = parseDueDate(act.dueDate);
       if (!d) return;
       var k = dateKey(d);
@@ -2055,6 +2191,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var rows = reportBaseRows();
     if (reportFilters.resp !== 'all') rows = rows.filter(function (a) { return respLabel(a) === reportFilters.resp; });
     if (reportFilters.company !== 'all') rows = rows.filter(function (a) { return companyLabel(a) === reportFilters.company; });
+    if (reportFilters.dept !== 'all') rows = rows.filter(function (a) { return itemDepartment(a) === reportFilters.dept; });
     if (reportFilters.from) {
       var fromD = dateFromKey(reportFilters.from);
       rows = rows.filter(function (a) {
@@ -2080,7 +2217,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function openReportModal() {
     if (!isAdmin(getCurrentUser())) return;
-    reportFilters = { from: '', to: '', resp: 'all', company: 'all' };
+    reportFilters = { from: '', to: '', resp: 'all', company: 'all', dept: 'all' };
     renderReportModal();
   }
 
@@ -2098,6 +2235,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       var loc = locationLabel(a);
       return '<tr>' +
         '<td>' + escapeHtml(a.name || '') + '</td>' +
+        '<td><span class="dept-tag dept-' + itemDepartment(a) + '" style="margin-left:0;">' + departmentLabel(itemDepartment(a)) + '</span></td>' +
         '<td>' + escapeHtml(companyLabel(a)) + '</td>' +
         '<td class="mono">' + escapeHtml(a.cnpj && !isTodosWord(a.cnpj) ? a.cnpj : '—') + '</td>' +
         '<td>' + escapeHtml(loc || '—') + '</td>' +
@@ -2114,7 +2252,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
     var tableHtml = rows.length
       ? '<div class="report-table-wrap"><table class="report-table">' +
-        '<thead><tr><th>Atividade</th><th>Empresa</th><th>CNPJ</th><th>Município/UF</th><th>Responsável</th><th>Prazo</th>' +
+        '<thead><tr><th>Atividade</th><th>Departamento</th><th>Empresa</th><th>CNPJ</th><th>Município/UF</th><th>Responsável</th><th>Prazo</th>' +
         '<th>Concluída em</th><th>Concluído por</th><th>Duração</th><th>Guia entregue</th><th>Comentário</th><th>Situação</th></tr></thead>' +
         '<tbody>' + tableRows + '</tbody></table></div>'
       : '<p class="muted" style="text-align:center;padding:24px 0;">Nenhuma atividade concluída encontrada com esses filtros.</p>';
@@ -2127,6 +2265,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<div><label class="field-label" for="reportTo">Até</label><input type="date" id="reportTo" value="' + reportFilters.to + '"></div>' +
       '<div><label class="field-label" for="reportResp">Responsável</label><select id="reportResp"></select></div>' +
       '<div><label class="field-label" for="reportCompany">Empresa</label><select id="reportCompany"></select></div>' +
+      '<div><label class="field-label" for="reportDept">Departamento</label><select id="reportDept">' +
+      '<option value="all">Todos</option>' + departmentSelectOptions(null) + '</select></div>' +
       '</div>' +
       '<div class="report-stats">' +
       '<span class="chip">' + rows.length + ' concluída(s)</span>' +
@@ -2145,11 +2285,13 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     fillSelect('reportCompany', Object.keys(companies).sort(), 'Todas as empresas', false);
     document.getElementById('reportResp').value = reportFilters.resp;
     document.getElementById('reportCompany').value = reportFilters.company;
+    document.getElementById('reportDept').value = reportFilters.dept;
 
     document.getElementById('reportFrom').addEventListener('change', function (e) { reportFilters.from = e.target.value; renderReportModal(); });
     document.getElementById('reportTo').addEventListener('change', function (e) { reportFilters.to = e.target.value; renderReportModal(); });
     document.getElementById('reportResp').addEventListener('change', function (e) { reportFilters.resp = e.target.value; renderReportModal(); });
     document.getElementById('reportCompany').addEventListener('change', function (e) { reportFilters.company = e.target.value; renderReportModal(); });
+    document.getElementById('reportDept').addEventListener('change', function (e) { reportFilters.dept = e.target.value; renderReportModal(); });
     document.getElementById('reportClose').addEventListener('click', closeModal);
     var exportBtn = document.getElementById('reportExportBtn');
     if (exportBtn && !exportBtn.disabled) {
@@ -2163,6 +2305,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         var sit = completionSituacao(a);
         return {
           'Atividade': a.name || '',
+          'Departamento': departmentLabel(itemDepartment(a)),
           'Empresa': companyLabel(a),
           'CNPJ': (a.cnpj && !isTodosWord(a.cnpj)) ? a.cnpj : '',
           'Município/UF': locationLabel(a) || '',
@@ -2178,7 +2321,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       });
       var ws = XLSX.utils.json_to_sheet(data);
       ws['!cols'] = [
-        { wch: 34 }, { wch: 22 }, { wch: 18 }, { wch: 16 }, { wch: 18 }, { wch: 13 },
+        { wch: 34 }, { wch: 14 }, { wch: 22 }, { wch: 18 }, { wch: 16 }, { wch: 18 }, { wch: 13 },
         { wch: 20 }, { wch: 18 }, { wch: 12 }, { wch: 16 }, { wch: 28 }, { wch: 11 }
       ];
       var wb = XLSX.utils.book_new();
@@ -2335,6 +2478,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     } else {
       renderSummary();
       renderList();
+      document.getElementById('filterDept').hidden = !admin;
       document.getElementById('importBtn').hidden = !admin;
       document.getElementById('importBtn').disabled = blocked;
       document.getElementById('manageUsersBtn').hidden = !admin;
@@ -2361,7 +2505,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   function renderHeader() {
     var sub;
     if (currentView === 'metas') {
-      var ng = STATE.goals.length;
+      var ng = visibleGoalsRaw().length;
       sub = ng + (ng === 1 ? ' meta' : ' metas');
     } else if (currentView === 'tickets') {
       var nt = ticketsForCurrentUserAndDate().length;
@@ -2369,7 +2513,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       document.getElementById('headerSubtitle').textContent = sub;
       return;
     } else {
-      var n = STATE.activities.length;
+      var n = visibleActivitiesRaw().length;
       sub = n + (n === 1 ? ' atividade' : ' atividades');
     }
     if (STATE.updatedAt) sub += ' • atualizado em ' + fmtDateTime(STATE.updatedAt);
@@ -2383,9 +2527,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function renderGoalsSummary() {
-    var total = STATE.goals.length;
-    var done = STATE.goals.filter(isGoalComplete).length;
-    var overdue = STATE.goals.filter(isGoalOverdue).length;
+    var scopedGoals = visibleGoalsRaw();
+    var total = scopedGoals.length;
+    var done = scopedGoals.filter(isGoalComplete).length;
+    var overdue = scopedGoals.filter(isGoalOverdue).length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     var html =
       '<div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
@@ -2404,6 +2549,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function renderGoalCard(g, admin) {
     var resp = g.responsible ? '<span class="chip">' + escapeHtml(g.responsible) + '</span>' : '';
+    var deptChip = admin ? '<span class="chip dept-chip dept-' + itemDepartment(g) + '">' + departmentLabel(itemDepartment(g)) + '</span>' : '';
     var companyChip = '<span class="chip">' + escapeHtml(companyLabel(g)) + '</span>';
     var overdue = isGoalOverdue(g);
     var complete = isGoalComplete(g);
@@ -2426,7 +2572,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<article class="goal-card" data-id="' + g.id + '">' +
       '<div class="goal-main">' +
       '<div class="goal-title">' + escapeHtml(g.name) + '</div>' +
-      '<div class="goal-meta">' + resp + companyChip + dueChip + '</div>' +
+      '<div class="goal-meta">' + deptChip + resp + companyChip + dueChip + '</div>' +
       '</div>' +
       '<div class="goal-progress">' +
       '<div class="goal-progress-bar"><div class="goal-progress-fill' + (complete ? ' is-complete' : '') + '" style="width:' + pct + '%"></div></div>' +
@@ -2452,8 +2598,13 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         '<p>Clique em "+ Nova meta" ou em "Importar planilha de metas" para começar.</p></div>';
       return;
     }
+    var scopedGoals = visibleGoalsRaw();
+    if (!scopedGoals.length) {
+      root.innerHTML = '<div class="empty-state"><h3>Nenhuma meta no seu departamento ainda</h3><p>Quando alguma meta for cadastrada no seu departamento, ela aparece aqui.</p></div>';
+      return;
+    }
     var text = normalize(document.getElementById('goalSearchInput').value);
-    var visible = STATE.goals.filter(function (g) { return goalMatchesFilter(g, text); });
+    var visible = scopedGoals.filter(function (g) { return goalMatchesFilter(g, text); });
     if (!visible.length) {
       root.innerHTML = '<div class="empty-state"><h3>Nenhuma meta encontrada</h3><p>Ajuste a busca.</p></div>';
       return;
@@ -2501,10 +2652,11 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function renderSummary() {
     var admin = isAdmin(getCurrentUser());
-    var total = STATE.activities.length;
-    var done = STATE.activities.filter(function (a) { return a.status === 'done'; }).length;
-    var inProgress = STATE.activities.filter(function (a) { return a.status === 'in_progress' && !isOverdue(a); }).length;
-    var overdue = STATE.activities.filter(isOverdue).length;
+    var scopedActivities = visibleActivitiesRaw();
+    var total = scopedActivities.length;
+    var done = scopedActivities.filter(function (a) { return a.status === 'done'; }).length;
+    var inProgress = scopedActivities.filter(function (a) { return a.status === 'in_progress' && !isOverdue(a); }).length;
+    var overdue = scopedActivities.filter(isOverdue).length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     var prevDone = lastSummaryVals.done === null ? 0 : lastSummaryVals.done;
     var prevInProgress = lastSummaryVals.inProgress === null ? 0 : lastSummaryVals.inProgress;
@@ -2546,7 +2698,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (!user) { badge.innerHTML = ''; return; }
     var infoHtml = viewerHidden
       ? '<span class="viewer-hidden-label">Usuário oculto</span>'
-      : 'Você: <strong>' + escapeHtml(user.name) + '</strong>' + (isAdmin(user) ? '<span class="role-tag">admin</span>' : '');
+      : 'Você: <strong>' + escapeHtml(user.name) + '</strong>' +
+        (isAdmin(user)
+          ? '<span class="role-tag">admin</span>'
+          : '<span class="dept-tag dept-' + userDepartment(user) + '">' + departmentLabel(userDepartment(user)) + '</span>');
     badge.innerHTML =
       '<span class="viewer-info">' + infoHtml + '</span>' +
       '<button type="button" class="viewer-eye-btn" id="viewerEyeBtn" aria-label="' +
@@ -2562,7 +2717,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function refreshFilterOptions(preserve) {
     var resps = {}, companies = {};
-    STATE.activities.forEach(function (a) { resps[respLabel(a)] = true; companies[companyLabel(a)] = true; });
+    visibleActivitiesRaw().forEach(function (a) { resps[respLabel(a)] = true; companies[companyLabel(a)] = true; });
     fillSelect('filterResp', Object.keys(resps).sort(), 'Todos os responsáveis', preserve);
     fillSelect('filterEmpresa', Object.keys(companies).sort(), 'Todas as empresas', preserve);
   }
@@ -2577,10 +2732,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function currentFilters() {
+    var deptEl = document.getElementById('filterDept');
     return {
       text: normalize(document.getElementById('searchInput').value),
       resp: document.getElementById('filterResp').value,
       company: document.getElementById('filterEmpresa').value,
+      dept: deptEl ? deptEl.value : 'all',
       status: document.getElementById('filterStatus').value
     };
   }
@@ -2593,6 +2750,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     }
     if (f.resp !== 'all' && respLabel(act) !== f.resp) return false;
     if (f.company !== 'all' && companyLabel(act) !== f.company) return false;
+    if (f.dept && f.dept !== 'all' && itemDepartment(act) !== f.dept) return false;
     if (f.text) {
       var hay = normalize(act.name + ' ' + act.responsible + ' ' + act.company + ' ' + act.cnpj + ' ' + act.municipio);
       if (hay.indexOf(f.text) === -1) return false;
@@ -2609,6 +2767,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function renderRow(act, admin) {
     var resp = act.responsible ? '<span class="chip">' + escapeHtml(act.responsible) + '</span>' : '';
+    var deptChip = admin ? '<span class="chip dept-chip dept-' + itemDepartment(act) + '">' + departmentLabel(itemDepartment(act)) + '</span>' : '';
     var loc = locationLabel(act);
     var locChip = loc ? '<span class="chip">' + escapeHtml(loc) + '</span>' : '';
     var cnpjChip = (act.cnpj && !isTodosWord(act.cnpj))
@@ -2685,7 +2844,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<button class="toggle' + (isLocked ? ' is-locked' : '') + '" type="button" data-action="toggle" data-id="' + act.id + '" aria-pressed="' + (act.status === 'done') + '"' + toggleTitle + (blocked ? ' disabled' : '') + '>' +
       '<span class="toggle-dot"></span></button>' +
       '<div class="row-main"><div class="row-title">' + escapeHtml(act.name) + '</div>' +
-      '<div class="row-meta">' + resp + locChip + cnpjChip + dueChip + flags + '</div>' + comment + auditBtn + '</div>' +
+      '<div class="row-meta">' + deptChip + resp + locChip + cnpjChip + dueChip + flags + '</div>' + comment + auditBtn + '</div>' +
       '<div class="row-status">' + status + deleteBtn + '</div>' +
       '</article>'
     );
@@ -2701,6 +2860,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var root = document.getElementById('listRoot');
     pruneSelection();
     var admin = isAdmin(getCurrentUser());
+    refreshFilterOptions(true);
     if (!STATE.activities.length) {
       root.innerHTML =
         '<div class="empty-state"><h3>Nenhuma atividade importada ainda</h3>' +
@@ -2709,8 +2869,15 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       updateDeleteSelectedButton();
       return;
     }
+    var scoped = visibleActivitiesRaw();
+    if (!scoped.length) {
+      root.innerHTML = '<div class="empty-state"><h3>Nenhuma atividade no seu departamento ainda</h3><p>Quando alguma atividade for cadastrada no seu departamento, ela aparece aqui.</p></div>';
+      syncSelectAllCheckbox([]);
+      updateDeleteSelectedButton();
+      return;
+    }
     var f = currentFilters();
-    var visible = STATE.activities.filter(function (a) { return matchesFilter(a, f); });
+    var visible = scoped.filter(function (a) { return matchesFilter(a, f); });
     if (!visible.length) {
       root.innerHTML = '<div class="empty-state"><h3>Nenhuma atividade encontrada</h3><p>Ajuste os filtros ou a busca.</p></div>';
       syncSelectAllCheckbox([]);
@@ -2837,7 +3004,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         return;
       }
       if (parsed.error) { showToast(parsed.error, 'error'); return; }
-      var merge = mergeActivities(STATE.activities, parsed.items);
+      var merge = mergeActivities(STATE.activities, parsed.items, pendingImportDept);
       openImportPreview(parsed, merge, function (confirmed) {
         if (!confirmed) return;
         STATE.activities = merge.merged;
@@ -2932,11 +3099,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.getElementById('searchInput').addEventListener('input', renderList);
     document.getElementById('filterResp').addEventListener('change', renderList);
     document.getElementById('filterEmpresa').addEventListener('change', renderList);
+    document.getElementById('filterDept').addEventListener('change', renderList);
     document.getElementById('filterStatus').addEventListener('change', renderList);
 
     document.getElementById('importBtn').addEventListener('click', function () {
       if (!isAdmin(getCurrentUser())) return;
-      document.getElementById('fileInput').click();
+      openImportDepartmentPicker('activities');
     });
     document.getElementById('fileInput').addEventListener('change', function (e) {
       var file = e.target.files[0];
@@ -3027,7 +3195,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.getElementById('addGoalBtn').addEventListener('click', requestAddGoal);
     document.getElementById('importGoalsBtn').addEventListener('click', function () {
       if (!isAdmin(getCurrentUser())) return;
-      document.getElementById('goalFileInput').click();
+      openImportDepartmentPicker('goals');
     });
     document.getElementById('goalFileInput').addEventListener('change', function (e) {
       var file = e.target.files[0];
