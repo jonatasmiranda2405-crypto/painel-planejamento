@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="build-id" content="20261023175612">
+<meta name="build-id" content="20261023180425">
 <title>Planejamento Fiscal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1101,6 +1101,11 @@
   }
   .topbar-date{text-transform:none;}
   .topbar-date::first-letter{text-transform:uppercase;}
+
+/* Meu Dia: carry-over */
+.ticket-carry{display:inline-block;font-size:.72rem;font-weight:600;color:var(--warn,#b45309);background:color-mix(in srgb,var(--warn,#b45309) 12%,transparent);border-radius:999px;padding:2px 9px;margin-bottom:6px;}
+.ticket-carry.done{color:var(--ink-muted);background:var(--surface-2);}
+.ticket-card.is-carried{border-left:3px solid var(--warn,#b45309);}
 </style>
 
 </head>
@@ -2890,9 +2895,34 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   function ticketsForCurrentUserAndDate() {
     var user = getCurrentUser();
     if (!user) return [];
+    var todayK = dateKey(todayMidnight());
     return STATE.tickets.filter(function (t) {
-      return normalize(t.owner) === normalize(user.name) && t.date === ticketViewDate;
+      if (normalize(t.owner) !== normalize(user.name)) return false;
+      if (t.date === ticketViewDate) return true;
+      // pendentes de dias anteriores acompanham a pessoa até serem concluídas
+      if (ticketViewDate === todayK && t.date < todayK && t.status !== 'done') return true;
+      // concluído neste dia (mesmo que criado antes)
+      if (t.status === 'done' && t.doneDate === ticketViewDate) return true;
+      return false;
     });
+  }
+
+  function ticketCarryBadge(t) {
+    if (!t.date || t.date === ticketViewDate) return '';
+    var d = t.date.slice(8, 10) + '/' + t.date.slice(5, 7);
+    var days = Math.round((dateFromKey(ticketViewDate) - dateFromKey(t.date)) / 86400000);
+    if (days <= 0) return '';
+    if (t.status === 'done') return '<span class="ticket-carry done" title="Criado em ' + d + '">de ' + d + '</span>';
+    return '<span class="ticket-carry" title="Criado em ' + d + '">⏳ Pendente desde ' + d + ' · ' + days + (days === 1 ? ' dia' : ' dias') + '</span>';
+  }
+
+  function countCarriedTickets() {
+    var todayK = dateKey(todayMidnight());
+    var user = getCurrentUser();
+    if (!user) return 0;
+    return STATE.tickets.filter(function (t) {
+      return normalize(t.owner) === normalize(user.name) && t.date < todayK && t.status !== 'done';
+    }).length;
   }
 
   function renderTicketsView() {
@@ -2935,7 +2965,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var canMoveFwd = idx < keys.length - 1;
     var notesHtml = t.notes ? '<p class="ticket-notes">' + escapeHtml(t.notes) + '</p>' : '';
     return (
-      '<article class="ticket-card" data-id="' + t.id + '">' +
+      '<article class="ticket-card' + (ticketCarryBadge(t) && t.status !== 'done' ? ' is-carried' : '') + '" data-id="' + t.id + '">' +
+      ticketCarryBadge(t) +
       '<div class="ticket-card-title">' + escapeHtml(t.title) + '</div>' +
       notesHtml +
       '<div class="ticket-card-actions">' +
@@ -2960,6 +2991,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var idx = keys.indexOf(t.status) + dir;
     if (idx < 0 || idx >= keys.length) return;
     t.status = keys[idx];
+    if (t.status === 'done') t.doneDate = dateKey(todayMidnight());
+    else delete t.doneDate;
     t.updatedAt = new Date().toISOString();
     persist();
   }
@@ -3502,6 +3535,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     } else if (currentView === 'tickets') {
       var nt = ticketsForCurrentUserAndDate().length;
       sub = 'Meu Dia • ' + nt + (nt === 1 ? ' ticket' : ' tickets');
+      var nc = countCarriedTickets();
+      if (nc) sub += ' • ' + nc + (nc === 1 ? ' pendente de dias anteriores' : ' pendentes de dias anteriores');
       document.getElementById('headerSubtitle').textContent = sub;
       return;
     } else if (currentView === 'dashboard') {
@@ -3656,6 +3691,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var prevOverdue = lastSummaryVals.overdue === null ? 0 : lastSummaryVals.overdue;
     var prevTotal = lastSummaryVals.total === null ? 0 : lastSummaryVals.total;
     var html =
+      '<div class="summary-actions"><button class="btn btn-ghost btn-sm" type="button" id="openCalendarBtn">' + ico('calendar') + 'Calendário</button></div>' +
       '<div class="kpi-grid">' +
       '<div class="kpi kpi-hero"><div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
       '<div class="kpi-hero-text"><strong>' + done + ' de ' + total + '</strong><span>atividades finalizadas</span>' +
@@ -3666,6 +3702,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<div class="kpi"><span>Total</span><strong id="summaryTotalVal">' + prevTotal + '</strong></div>' +
       '</div>';
     document.getElementById('summaryCard').innerHTML = html;
+    document.getElementById('openCalendarBtn').addEventListener('click', openCalendarModal);
 
     animateCount(document.getElementById('summaryDoneVal'), prevDone, done);
     animateCount(document.getElementById('summaryProgVal'), prevInProgress, inProgress);
@@ -3702,7 +3739,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var html = '<div class="sb-section"><div class="sb-section-title">Atalhos</div>' +
       sbItem('new-activity', 'plus', 'Nova atividade') +
       sbItem('import', 'upload', 'Importar planilha') +
-      sbItem('calendar', 'calendar', 'Calendário') +
       sbItem('overdue', 'alert', 'Atrasadas', overdueAll || '', overdueAll ? 'danger' : '') +
       '</div>';
     if (admin) {
@@ -3797,7 +3833,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (document.querySelector('#modalRoot .sb-sheet')) closeModal();
     if (act === 'new-activity') { setView('atividades'); requestAddActivity(); }
     else if (act === 'import') { setView('atividades'); if (admin) openImportDepartmentPicker('activities'); else document.getElementById('fileInput').click(); }
-    else if (act === 'calendar') openCalendarModal();
     else if (act === 'overdue') {
       setActivePeriod('all');
       setView('atividades');
