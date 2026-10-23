@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="build-id" content="20261023173505">
+<meta name="build-id" content="20261023173922">
 <title>Planejamento Fiscal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1025,6 +1025,8 @@
     .row-main{flex:1 1 0;min-width:0;}
     .row-status{flex:1 1 100%;}
   }
+  .count-pill{font-family:var(--font-mono);font-size:.7rem;font-weight:700;background:var(--danger-bg);color:var(--danger);border-radius:999px;padding:0 7px;margin-left:6px;}
+  .count-pill:empty{display:none;}
 </style>
 
 </head>
@@ -1125,6 +1127,7 @@
         <div class="spacer"></div>
         <button class="btn btn-ghost btn-sm" id="manageUsersBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.1 2.2 3.5 5.2"/></svg>Usuários</button>
         <button class="btn btn-ghost btn-sm" id="importHistoryBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Importações</button>
+        <button class="btn btn-ghost btn-sm" id="deletedBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>Excluídas <span class="count-pill" id="deletedBtnCount"></span></button>
         <button class="btn btn-ghost btn-sm" id="backupBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>Backup</button>
         <button class="btn btn-ghost" id="importBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>Importar planilha</button>
         <button class="btn btn-primary" id="addActivityBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova atividade</button>
@@ -1455,6 +1458,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (!S.tickets) S.tickets = [];
     if (!S.activities) S.activities = [];
     if (!S.importLog) S.importLog = [];
+    if (!S.deletedLog) S.deletedLog = [];
     S.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
     S.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; if (!a.period) a.period = periodOfItem(a); });
     S.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; if (!g.period) g.period = periodOfItem(g); });
@@ -3378,6 +3382,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       document.getElementById('importBtn').disabled = blocked;
       document.getElementById('backupBtn').hidden = !admin;
       document.getElementById('importHistoryBtn').hidden = !admin;
+      var delBtnEl = document.getElementById('deletedBtn');
+      delBtnEl.hidden = !admin;
+      var delCount = (STATE.deletedLog || []).length;
+      document.getElementById('deletedBtnCount').textContent = delCount ? String(delCount) : '';
       document.getElementById('manageUsersBtn').hidden = !admin;
       document.getElementById('manageUsersBtn').disabled = blocked;
       document.getElementById('addActivityBtn').hidden = !user;
@@ -3749,7 +3757,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       ? '<button class="row-edit" type="button" data-action="edit-row" data-id="' + act.id + '"' +
         (blocked ? ' disabled' : '') + ' title="Editar nome ou prazo" aria-label="Editar nome ou prazo">' + ico('edit') + 'Editar</button>'
       : '';
-    var deleteBtn = admin
+    var deleteBtn = currentUser
       ? '<button class="row-delete" type="button" data-action="delete-row" data-id="' + act.id + '"' +
         (blocked ? ' disabled' : '') + ' title="Excluir atividade" aria-label="Excluir atividade">' + ico('trash') + 'Excluir</button>'
       : '';
@@ -4094,7 +4102,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var more = count > 8 ? '<li class="muted">+ ' + (count - 8) + ' outra(s)...</li>' : '';
     openModal(
       '<h3>Excluir ' + (count === 1 ? 'atividade' : count + ' atividades') + '?</h3>' +
-      '<p>' + (count === 1 ? 'A atividade será removida' : 'As atividades serão removidas') + ' permanentemente do painel para todos assim que salvar. Não é possível desfazer por aqui — só reimportando a planilha.</p>' +
+      '<p>' + (count === 1 ? 'A atividade sairá' : 'As atividades sairão') + ' da lista para todos. O administrador mantém o registro de quem excluiu e pode restaurar.</p>' +
       '<ul class="delete-preview-list">' + listHtml + more + '</ul>' +
       '<div class="modal-actions">' +
       '<button class="btn btn-ghost" id="deleteCancel" type="button">Cancelar</button>' +
@@ -4105,24 +4113,50 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.getElementById('deleteConfirm').addEventListener('click', function () { closeModal(); cb(true); });
   }
 
-  function deleteActivitiesByIds(ids) {
+  // Anyone logged in can delete an activity they can see. Nothing is lost silently: every
+  // deletion is saved in deletedLog (who, when, and a full copy of the activity) so the
+  // admin can review what was deleted and restore it. The change goes through a transaction,
+  // so it applies to the latest shared state. Non-admins can only delete from their own department.
+  var DELETED_LOG_MAX = 300;
+
+  function deleteActivitiesSafely(ids) {
+    var user = getCurrentUser();
+    var admin = isAdmin(user);
     var idSet = {};
     ids.forEach(function (id) { idSet[id] = true; });
-    STATE.activities = STATE.activities.filter(function (a) { return !idSet[a.id]; });
-    ids.forEach(function (id) { delete selectedIds[id]; });
+    return runSafeMutation(function (remote) {
+      var removed = [];
+      remote.activities = remote.activities.filter(function (a) {
+        if (!idSet[a.id]) return true;
+        if (!admin && itemDepartment(a) !== userDepartment(user)) return true;
+        removed.push(a);
+        return false;
+      });
+      var now = new Date().toISOString();
+      removed.forEach(function (a) {
+        remote.deletedLog.push({ id: 'del' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), at: now, by: user.name, activity: a });
+      });
+      if (remote.deletedLog.length > DELETED_LOG_MAX) remote.deletedLog = remote.deletedLog.slice(-DELETED_LOG_MAX);
+      return removed.length;
+    }, { backup: false, reason: 'exclusao' }).then(function (out) {
+      ids.forEach(function (id) { delete selectedIds[id]; });
+      refreshFilterOptions(true);
+      render();
+      showToast(out.result + (out.result === 1 ? ' atividade excluída.' : ' atividades excluídas.'));
+    }).catch(function () {
+      showToast('Não foi possível excluir agora. Nada foi alterado — tente novamente.', 'error');
+    });
   }
 
   function requestDeleteActivity(id) {
-    if (!isAdmin(getCurrentUser())) return;
+    if (!getCurrentUser()) return;
     var blockedReason = writeBlockedReason();
     if (blockedReason) { showToast(blockedReason, 'warn'); return; }
     var act = STATE.activities.filter(function (a) { return a.id === id; })[0];
     if (!act) return;
     openDeleteConfirmModal([act], function (confirmed) {
       if (!confirmed) return;
-      deleteActivitiesByIds([id]);
-      refreshFilterOptions(true);
-      persist();
+      deleteActivitiesSafely([id]);
     });
   }
 
@@ -4135,10 +4169,53 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var acts = STATE.activities.filter(function (a) { return selectedIds[a.id]; });
     openDeleteConfirmModal(acts, function (confirmed) {
       if (!confirmed) return;
-      deleteActivitiesByIds(ids);
-      refreshFilterOptions(true);
-      persist();
+      deleteActivitiesSafely(ids);
     });
+  }
+
+  // Admin: everything that was deleted, newest first, with a restore button.
+  function openDeletedLogModal() {
+    if (!isAdmin(getCurrentUser())) return;
+    var log = (STATE.deletedLog || []).slice().reverse();
+    var rows = log.map(function (e) {
+      var a = e.activity || {};
+      var statusTxt = a.status === 'done' ? 'finalizada' + (a.completedBy ? ' por ' + a.completedBy : '') : (a.status === 'in_progress' ? 'em andamento' : 'pendente');
+      return '<li><div><strong>' + escapeHtml(a.name || '—') + '</strong><br><small class="muted">' +
+        escapeHtml(companyLabel(a)) + ' · ' + escapeHtml(departmentLabel(itemDepartment(a))) + ' · ' + escapeHtml(periodLabel(periodOfItem(a))) +
+        (a.responsible ? ' · resp.: ' + escapeHtml(a.responsible) : '') + (a.dueDate ? ' · prazo ' + escapeHtml(a.dueDate) : '') + ' · ' + escapeHtml(statusTxt) +
+        '<br>Excluída por <strong>' + escapeHtml(e.by || '—') + '</strong> em ' + fmtDateTime(e.at) + '</small></div>' +
+        '<button class="btn btn-ghost btn-sm" type="button" data-restore-del="' + escapeHtml(e.id) + '">Restaurar</button></li>';
+    }).join('');
+    openModal(
+      '<h3>Atividades excluídas</h3>' +
+      '<p>Registro de tudo que foi excluído (as ' + DELETED_LOG_MAX + ' mais recentes). "Restaurar" devolve a atividade à lista exatamente como estava.</p>' +
+      '<ul class="userlist import-log deleted-log">' + (rows || '<li class="muted" style="justify-content:center;">Nenhuma atividade excluída</li>') + '</ul>' +
+      '<div class="modal-actions"><button class="btn btn-ghost" id="deletedLogClose" type="button">Fechar</button></div>',
+      'modal-wide'
+    );
+    document.getElementById('deletedLogClose').addEventListener('click', closeModal);
+    document.querySelector('#modalRoot .deleted-log').addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-restore-del]') : null;
+      if (!b) return;
+      restoreDeleted(b.getAttribute('data-restore-del'));
+    });
+  }
+
+  function restoreDeleted(delId) {
+    var blocked = writeBlockedReason();
+    if (blocked) { showToast(blocked, 'warn'); return; }
+    runSafeMutation(function (remote) {
+      var idx = -1;
+      remote.deletedLog.forEach(function (e, i) { if (e.id === delId) idx = i; });
+      if (idx === -1) throw new Error('missing');
+      var act = remote.deletedLog[idx].activity;
+      remote.deletedLog.splice(idx, 1);
+      if (!remote.activities.some(function (a) { return a.id === act.id; })) remote.activities.push(act);
+      return act.name;
+    }, { backup: false, reason: 'restaurar' }).then(function (out) {
+      showToast('Atividade restaurada: ' + out.result);
+      openDeletedLogModal();
+    }).catch(function () { showToast('Não foi possível restaurar agora.', 'error'); });
   }
 
   // ---------- init ----------
@@ -4192,6 +4269,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.getElementById('backupBtn').addEventListener('click', function () {
       if (isAdmin(getCurrentUser())) exportBackup();
     });
+    document.getElementById('deletedBtn').addEventListener('click', openDeletedLogModal);
     document.getElementById('importHistoryBtn').addEventListener('click', function () {
       if (isAdmin(getCurrentUser())) openImportHistoryModal();
     });
