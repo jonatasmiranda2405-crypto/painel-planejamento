@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="build-id" content="20261023173922">
+<meta name="build-id" content="20261023175612">
 <title>Planejamento Fiscal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1027,6 +1027,80 @@
   }
   .count-pill{font-family:var(--font-mono);font-size:.7rem;font-weight:700;background:var(--danger-bg);color:var(--danger);border-radius:999px;padding:0 7px;margin-left:6px;}
   .count-pill:empty{display:none;}
+
+  /* ---- sidebar v2: workspace, atalhos, admin, status, perfil ---- */
+  .sidebar{gap:2px;padding:16px 12px 12px;}
+  .sb-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 14px;margin-bottom:4px;border-bottom:1px solid var(--border);}
+  .sb-brand-tile{width:34px;height:34px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex:none;}
+  .sb-brand-text{display:flex;flex-direction:column;min-width:0;line-height:1.2;}
+  .sb-brand-text strong{font-size:.9rem;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-brand-text span{font-size:.74rem;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-section{display:flex;flex-direction:column;gap:2px;margin-top:10px;}
+  .sb-section-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);padding:6px 12px 4px;opacity:.85;}
+  .sb-nav-title{margin-top:6px;}
+  .sb-item{
+    display:flex;align-items:center;gap:11px;width:100%;font-family:inherit;font-size:.86rem;font-weight:550;text-align:left;
+    background:transparent;border:none;color:var(--ink-muted);padding:7px 12px;border-radius:var(--radius-s);cursor:pointer;
+    transition:background .15s var(--ease),color .15s var(--ease);
+  }
+  .sb-item:hover{background:var(--surface-2);color:var(--ink);}
+  .sb-icon{display:flex;width:18px;height:18px;flex:none;}
+  .sb-icon .ico{width:18px;height:18px;margin:0;}
+  .sb-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-badge{font-family:var(--font-mono);font-size:.68rem;font-weight:700;background:var(--surface-2);color:var(--ink-muted);border-radius:999px;padding:1px 7px;}
+  .sb-badge.is-danger{background:var(--danger-bg);color:var(--danger);}
+  .sb-item.sb-danger .sb-icon{color:var(--danger);}
+  .sb-more{display:none;}
+  .sidebar-bottom{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:12px;}
+  .sb-sync{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-s);background:var(--surface-2);}
+  .sb-dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--ink-muted);}
+  .sb-dot.is-ok{background:var(--done);box-shadow:0 0 0 3px color-mix(in srgb,var(--done) 22%,transparent);}
+  .sb-dot.is-wait{background:var(--pending);}
+  .sb-dot.is-error{background:var(--danger);}
+  .sb-sync-text{display:flex;flex-direction:column;min-width:0;line-height:1.25;}
+  .sb-sync-text strong{font-size:.76rem;font-weight:650;}
+  .sb-sync-text span{font-size:.68rem;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-profile{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 10px;border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);}
+  .sb-profile:empty{display:none;}
+  .sb-avatar{
+    width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-size:.78rem;font-weight:800;letter-spacing:.02em;
+    background:hsl(var(--hue) 70% 90%);color:hsl(var(--hue) 55% 30%);
+  }
+  :root[data-theme="dark"] .sb-avatar{background:hsl(var(--hue) 40% 24%);color:hsl(var(--hue) 80% 85%);}
+  .sb-profile-text{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25;}
+  .sb-profile-text strong{font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-profile-text span{font-size:.72rem;color:var(--ink-muted);}
+  .sb-profile .viewer-hidden-label{font-style:italic;font-weight:600;color:var(--ink-muted);}
+  .sb-profile .viewer-eye-btn{background:transparent;color:var(--ink-muted);border-radius:var(--radius-s);width:30px;height:30px;}
+  .sb-profile .viewer-eye-btn:hover{background:var(--surface-2);color:var(--ink);}
+  .sb-profile .viewer-eye-btn .ico{width:17px;height:17px;margin:0;}
+  .sidebar-footer{margin-top:0;border-top:none;padding-top:0;}
+  .topbar-date{font-size:.82rem;color:var(--ink-muted);font-weight:550;text-transform:capitalize;white-space:nowrap;}
+
+  /* menu recolhido: só ícones */
+  .sidebar.is-collapsed .sb-brand{justify-content:center;padding-left:0;padding-right:0;}
+  .sidebar.is-collapsed .sb-brand-text,.sidebar.is-collapsed .sb-label,.sidebar.is-collapsed .sb-section-title,
+  .sidebar.is-collapsed .sb-profile-text,.sidebar.is-collapsed .sb-sync-text,.sidebar.is-collapsed .sb-profile .viewer-eye-btn{display:none;}
+  .sidebar.is-collapsed .sb-item{justify-content:center;padding:9px 6px;position:relative;}
+  .sidebar.is-collapsed .sb-badge{position:absolute;top:1px;right:4px;font-size:.6rem;padding:0 5px;}
+  .sidebar.is-collapsed .sb-sync{justify-content:center;padding:8px 0;}
+  .sidebar.is-collapsed .sb-profile{justify-content:center;padding:6px;border:none;background:transparent;}
+
+  /* folha "Mais" no celular */
+  .modal.modal-sheet{max-width:440px;padding:16px;}
+  .sb-sheet .sb-profile{margin-bottom:8px;}
+  .sb-sheet .sb-sync{margin-bottom:4px;}
+  .sb-sheet .sb-item{padding:11px 12px;font-size:.92rem;}
+  @media (max-width:640px){
+    .sb-brand,.sb-nav-title,#sidebarExtra,.sidebar-bottom{display:none;}
+    .sb-more{display:flex;}
+    .topbar-date{display:none;}
+    .modal-backdrop:has(.modal-sheet){align-items:flex-end;padding:0;}
+    .modal.modal-sheet{border-radius:var(--radius-l) var(--radius-l) 0 0;max-width:none;max-height:80vh;}
+  }
+  .topbar-date{text-transform:none;}
+  .topbar-date::first-letter{text-transform:uppercase;}
 </style>
 
 </head>
@@ -1035,6 +1109,8 @@
 
 <div class="app-shell">
   <nav class="sidebar" id="sidebarNav">
+    <div class="sb-brand" id="sbBrand"></div>
+    <div class="sb-section-title sb-nav-title">Principal</div>
     <button class="sidebar-nav-btn is-active" type="button" id="navActivities" data-view="atividades">
       <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6.5l1.5 1.5 2.5-3M3.5 12.5l1.5 1.5 2.5-3M3.5 18.5l1.5 1.5 2.5-3"/></svg></span><span class="sidebar-nav-label">Atividades</span>
     </button>
@@ -1047,10 +1123,16 @@
     <button class="sidebar-nav-btn" type="button" id="navDashboard" data-view="dashboard" hidden>
       <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span><span class="sidebar-nav-label">Dashboard</span>
     </button>
+    <button class="sidebar-nav-btn sb-more" type="button" id="navMoreBtn" aria-label="Mais opções"><span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></span><span class="sidebar-nav-label">Mais</span></button>
+    <div id="sidebarExtra"></div>
+    <div class="sidebar-bottom">
+    <div class="sb-sync" id="sidebarSync"></div>
+    <div class="sb-profile" id="sidebarProfile"></div>
     <div class="sidebar-footer">
       <button class="sidebar-icon-btn" id="settingsBtn" type="button" title="Configurações" aria-label="Configurações"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
       <button class="sidebar-icon-btn" id="themeToggleBtn" type="button" title="Alternar tema" aria-label="Alternar tema"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>
       <button class="sidebar-collapse-btn" type="button" id="sidebarCollapseBtn" title="Recolher menu" aria-label="Recolher menu"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
     </div>
   </nav>
 
@@ -1063,7 +1145,7 @@
           <p class="muted" id="headerSubtitle">Carregando...</p>
         </div>
       </div>
-      <div class="viewer-badge" id="viewerBadge"></div>
+      <div class="topbar-date" id="topbarDate"></div>
     </header>
 
     <div class="status-banner" id="statusBanner" hidden></div>
@@ -1125,10 +1207,6 @@
         </label>
         <button class="btn btn-danger btn-sm" id="deleteSelectedBtn" type="button" hidden disabled>Excluir selecionadas</button>
         <div class="spacer"></div>
-        <button class="btn btn-ghost btn-sm" id="manageUsersBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.1 2.2 3.5 5.2"/></svg>Usuários</button>
-        <button class="btn btn-ghost btn-sm" id="importHistoryBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Importações</button>
-        <button class="btn btn-ghost btn-sm" id="deletedBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>Excluídas <span class="count-pill" id="deletedBtnCount"></span></button>
-        <button class="btn btn-ghost btn-sm" id="backupBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>Backup</button>
         <button class="btn btn-ghost" id="importBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>Importar planilha</button>
         <button class="btn btn-primary" id="addActivityBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova atividade</button>
         <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
@@ -1250,6 +1328,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   var ICONS = {"chevron": "<path d=\"M9 6l6 6-6 6\"/>", "edit": "<path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z\"/>", "trash": "<path d=\"M3 6h18\"/><path d=\"M8 6V4h8v2\"/><path d=\"M19 6l-1 14H6L5 6\"/><path d=\"M10 11v6M14 11v6\"/>", "report": "<path d=\"M18 20V10M12 20V4M6 20v-6\"/>", "calendar": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"3\"/><path d=\"M3 10h18M8 3v4M16 3v4\"/>", "refresh": "<path d=\"M21 12a9 9 0 1 1-3-6.7\"/><path d=\"M21 4v5h-5\"/>", "download": "<path d=\"M12 4v11\"/><path d=\"M7 11l5 5 5-5\"/><path d=\"M5 20h14\"/>", "upload": "<path d=\"M12 16V5\"/><path d=\"M7 9l5-5 5 5\"/><path d=\"M5 20h14\"/>", "history": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "plus": "<path d=\"M12 5v14M5 12h14\"/>", "users": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5\"/><path d=\"M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.1 2.2 3.5 5.2\"/>", "list": "<path d=\"M9 6h11M9 12h11M9 18h11\"/><path d=\"M3.5 6.5l1.5 1.5 2.5-3M3.5 12.5l1.5 1.5 2.5-3M3.5 18.5l1.5 1.5 2.5-3\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.2\"/>", "dashboard": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"9\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\" rx=\"2\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\" rx=\"2\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\" rx=\"2\"/>", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/>", "moon": "<path d=\"M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z\"/>", "settings": "<path d=\"M4 7h9M17 7h3M4 17h3M11 17h9\"/><circle cx=\"15\" cy=\"7\" r=\"2\"/><circle cx=\"9\" cy=\"17\" r=\"2\"/>", "collapse": "<path d=\"M7 9l5-5 5 5M7 15l5 5 5-5\"/>", "shield": "<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/><path d=\"M9 12l2 2 4-4\"/>"};
+  ICONS.eye = '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>';
+  ICONS.eyeoff = '<path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.7A17 17 0 0 0 2 12s3.6 7 10 7a10 10 0 0 0 4.2-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>';
+  ICONS.more = '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>';
+  ICONS.alert = '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>';
   function ico(name) {
     return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
   }
@@ -3357,7 +3439,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     // fall back to the activities view instead of rendering it.
     if (currentView === 'dashboard' && !admin) currentView = 'atividades';
     renderHeader();
-    renderViewerBadge();
+    renderSidebar();
     updateStatusBanner();
     renderPeriodBars();
     var blocked = !!writeBlockedReason();
@@ -3380,14 +3462,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       document.getElementById('filterDept').hidden = !admin;
       document.getElementById('importBtn').hidden = !user;
       document.getElementById('importBtn').disabled = blocked;
-      document.getElementById('backupBtn').hidden = !admin;
-      document.getElementById('importHistoryBtn').hidden = !admin;
-      var delBtnEl = document.getElementById('deletedBtn');
-      delBtnEl.hidden = !admin;
-      var delCount = (STATE.deletedLog || []).length;
-      document.getElementById('deletedBtnCount').textContent = delCount ? String(delCount) : '';
-      document.getElementById('manageUsersBtn').hidden = !admin;
-      document.getElementById('manageUsersBtn').disabled = blocked;
       document.getElementById('addActivityBtn').hidden = !user;
       document.getElementById('addActivityBtn').disabled = blocked;
       document.getElementById('selectAllWrap').hidden = !admin;
@@ -3582,11 +3656,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var prevOverdue = lastSummaryVals.overdue === null ? 0 : lastSummaryVals.overdue;
     var prevTotal = lastSummaryVals.total === null ? 0 : lastSummaryVals.total;
     var html =
-      '<div class="summary-actions">' +
-      (admin ? '<button class="btn btn-ghost btn-sm" type="button" id="openReportBtn">' + ico('report') + 'Relatório</button>' : '') +
-      '<button class="btn btn-ghost btn-sm" type="button" id="openCalendarBtn">' + ico('calendar') + 'Calendário</button>' +
-      '<button class="btn btn-ghost btn-sm" type="button" id="refreshBtn" title="Buscar a versão mais recente que todos estão vendo">' + ico('refresh') + 'Atualizar</button>' +
-      '</div>' +
       '<div class="kpi-grid">' +
       '<div class="kpi kpi-hero"><div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
       '<div class="kpi-hero-text"><strong>' + done + ' de ' + total + '</strong><span>atividades finalizadas</span>' +
@@ -3597,10 +3666,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<div class="kpi"><span>Total</span><strong id="summaryTotalVal">' + prevTotal + '</strong></div>' +
       '</div>';
     document.getElementById('summaryCard').innerHTML = html;
-    document.getElementById('openCalendarBtn').addEventListener('click', openCalendarModal);
-    document.getElementById('refreshBtn').addEventListener('click', function () { location.reload(); });
-    var reportBtn = document.getElementById('openReportBtn');
-    if (reportBtn) reportBtn.addEventListener('click', openReportModal);
 
     animateCount(document.getElementById('summaryDoneVal'), prevDone, done);
     animateCount(document.getElementById('summaryProgVal'), prevInProgress, inProgress);
@@ -3609,27 +3674,146 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     lastSummaryVals = { done: done, inProgress: inProgress, overdue: overdue, total: total };
   }
 
-  function renderViewerBadge() {
+  // ---------- sidebar: workspace header, shortcuts, admin tools, sync status, profile ----------
+
+  function avatarInitials(name) {
+    var words = String(name || '').replace(/@/g, '').trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return '?';
+    return (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : '')).toUpperCase();
+  }
+  function avatarHue(name) {
+    var h = 0, str = String(name || '');
+    for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) % 360;
+    return h;
+  }
+
+  function sbItem(act, icon, label, badge, tone) {
+    return '<button type="button" class="sb-item' + (tone ? ' sb-' + tone : '') + '" data-sb="' + act + '" title="' + escapeHtml(label) + '">' +
+      '<span class="sb-icon">' + ico(icon) + '</span><span class="sb-label">' + escapeHtml(label) + '</span>' +
+      (badge ? '<span class="sb-badge' + (tone === 'danger' ? ' is-danger' : '') + '">' + badge + '</span>' : '') + '</button>';
+  }
+
+  function sidebarExtraHtml() {
     var user = getCurrentUser();
-    var badge = document.getElementById('viewerBadge');
-    if (!user) { badge.innerHTML = ''; return; }
-    var infoHtml = viewerHidden
-      ? '<span class="viewer-hidden-label">Usuário oculto</span>'
-      : 'Você: <strong>' + escapeHtml(user.name) + '</strong>' +
-        (isAdmin(user)
-          ? '<span class="role-tag">admin</span>'
-          : '<span class="dept-tag dept-' + userDepartment(user) + '">' + departmentLabel(userDepartment(user)) + '</span>');
-    badge.innerHTML =
-      '<span class="viewer-info">' + infoHtml + '</span>' +
-      '<button type="button" class="viewer-eye-btn" id="viewerEyeBtn" aria-label="' +
-      (viewerHidden ? 'Mostrar usuário' : 'Ocultar usuário') + '" title="' +
-      (viewerHidden ? 'Mostrar usuário' : 'Ocultar usuário') + '">' +
-      (viewerHidden ? '🙈' : '👁️') + '</button>';
-    document.getElementById('viewerEyeBtn').addEventListener('click', function () {
+    if (!user) return '';
+    var admin = isAdmin(user);
+    var overdueAll = visibleActivitiesRaw().filter(isOverdue).length;
+    var delCount = (STATE.deletedLog || []).length;
+    var html = '<div class="sb-section"><div class="sb-section-title">Atalhos</div>' +
+      sbItem('new-activity', 'plus', 'Nova atividade') +
+      sbItem('import', 'upload', 'Importar planilha') +
+      sbItem('calendar', 'calendar', 'Calendário') +
+      sbItem('overdue', 'alert', 'Atrasadas', overdueAll || '', overdueAll ? 'danger' : '') +
+      '</div>';
+    if (admin) {
+      html += '<div class="sb-section"><div class="sb-section-title">Administração</div>' +
+        sbItem('report', 'report', 'Relatório') +
+        sbItem('users', 'users', 'Usuários') +
+        sbItem('history', 'history', 'Importações') +
+        sbItem('deleted', 'trash', 'Excluídas', delCount || '') +
+        sbItem('backup', 'download', 'Backup') +
+        '</div>';
+    }
+    return html;
+  }
+
+  function profileHtml() {
+    var user = getCurrentUser();
+    if (!user) return '';
+    var hue = avatarHue(user.name);
+    var sub = isAdmin(user) ? 'Administrador' : departmentLabel(userDepartment(user));
+    return '<div class="sb-avatar" style="--hue:' + hue + '">' + (viewerHidden ? '•••' : escapeHtml(avatarInitials(user.name))) + '</div>' +
+      '<div class="sb-profile-text">' +
+      (viewerHidden
+        ? '<strong class="viewer-hidden-label">Usuário oculto</strong><span>Nome escondido</span>'
+        : '<strong>' + escapeHtml(user.name) + '</strong><span>' + escapeHtml(sub) + '</span>') +
+      '</div>' +
+      '<button type="button" class="viewer-eye-btn" data-sb="toggle-viewer" aria-label="' + (viewerHidden ? 'Mostrar meu nome' : 'Ocultar meu nome') +
+      '" title="' + (viewerHidden ? 'Mostrar meu nome' : 'Ocultar meu nome (útil para compartilhar a tela)') + '">' + ico(viewerHidden ? 'eyeoff' : 'eye') + '</button>';
+  }
+
+  function syncStatusHtml() {
+    var cls, label, sub = '';
+    if (firestoreError) { cls = 'is-error'; label = 'Sem conexão'; sub = 'Tentando reconectar'; }
+    else if (!firestoreReady) { cls = 'is-wait'; label = 'Conectando…'; }
+    else { cls = 'is-ok'; label = 'Sincronizado'; sub = STATE.updatedAt ? 'Atualizado ' + fmtDateTime(STATE.updatedAt) : ''; }
+    return '<span class="sb-dot ' + cls + '"></span><div class="sb-sync-text"><strong>' + label + '</strong>' + (sub ? '<span>' + escapeHtml(sub) + '</span>' : '') + '</div>';
+  }
+
+  function renderSidebar() {
+    var user = getCurrentUser();
+    var brand = document.getElementById('sbBrand');
+    if (brand) {
+      var dept = user ? (isAdmin(user) ? 'Todos os departamentos' : departmentLabel(userDepartment(user))) : '';
+      brand.innerHTML = '<span class="sb-brand-tile">N</span><div class="sb-brand-text"><strong>Nasa Veículos</strong><span>' + escapeHtml(dept || 'Planejamento') + '</span></div>';
+    }
+    var extra = document.getElementById('sidebarExtra');
+    if (extra) extra.innerHTML = sidebarExtraHtml();
+    var prof = document.getElementById('sidebarProfile');
+    if (prof) prof.innerHTML = profileHtml();
+    var sync = document.getElementById('sidebarSync');
+    if (sync) sync.innerHTML = syncStatusHtml();
+    var dateEl = document.getElementById('topbarDate');
+    if (dateEl) {
+      var t = new Date();
+      dateEl.textContent = WEEKDAY_LABELS_FULL[t.getDay()] + ', ' + t.getDate() + ' de ' + MONTH_LABELS[t.getMonth()].toLowerCase();
+    }
+  }
+
+  // Mobile: the bottom bar only has room for the main sections, so everything else
+  // (shortcuts, admin tools, profile, theme, settings) opens in a "Mais" sheet.
+  function openMoreSheet() {
+    var user = getCurrentUser();
+    if (!user) return;
+    openModal(
+      '<div class="sb-sheet">' +
+      '<div class="sb-profile">' + profileHtml() + '</div>' +
+      '<div class="sb-sync">' + syncStatusHtml() + '</div>' +
+      sidebarExtraHtml() +
+      '<div class="sb-section"><div class="sb-section-title">Aparência e app</div>' +
+      sbItem('refresh', 'refresh', 'Atualizar página') +
+      sbItem('theme', resolvedTheme() === 'dark' ? 'sun' : 'moon', 'Alternar tema') +
+      sbItem('settings', 'settings', 'Configurações') + '</div>' +
+      '</div>', 'modal-sheet');
+  }
+
+  function toggleTheme() {
+    settings.theme = resolvedTheme() === 'dark' ? 'light' : 'dark';
+    saveSettings();
+    applyAllSettings();
+  }
+
+  function handleSidebarAction(act) {
+    var user = getCurrentUser();
+    if (!user) return;
+    var admin = isAdmin(user);
+    if (act === 'toggle-viewer') {
       viewerHidden = !viewerHidden;
       try { localStorage.setItem(VIEWER_HIDDEN_KEY, viewerHidden ? '1' : '0'); } catch (e) {}
-      renderViewerBadge();
-    });
+      renderSidebar();
+      if (document.querySelector('#modalRoot .sb-sheet')) openMoreSheet();
+      return;
+    }
+    if (document.querySelector('#modalRoot .sb-sheet')) closeModal();
+    if (act === 'new-activity') { setView('atividades'); requestAddActivity(); }
+    else if (act === 'import') { setView('atividades'); if (admin) openImportDepartmentPicker('activities'); else document.getElementById('fileInput').click(); }
+    else if (act === 'calendar') openCalendarModal();
+    else if (act === 'overdue') {
+      setActivePeriod('all');
+      setView('atividades');
+      document.getElementById('filterStatus').value = 'overdue';
+      renderList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    else if (act === 'refresh') location.reload();
+    else if (act === 'theme') toggleTheme();
+    else if (act === 'settings') openSettingsModal();
+    else if (!admin) return;
+    else if (act === 'report') openReportModal();
+    else if (act === 'users') renderAdminPanel();
+    else if (act === 'history') openImportHistoryModal();
+    else if (act === 'deleted') openDeletedLogModal();
+    else if (act === 'backup') exportBackup();
   }
 
   function refreshFilterOptions(preserve) {
@@ -4266,13 +4450,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       e.target.value = '';
       if (file && getCurrentUser()) handleFile(file);
     });
-    document.getElementById('backupBtn').addEventListener('click', function () {
-      if (isAdmin(getCurrentUser())) exportBackup();
+    document.addEventListener('click', function (e) {
+      var sb = e.target.closest ? e.target.closest('[data-sb]') : null;
+      if (!sb) return;
+      handleSidebarAction(sb.getAttribute('data-sb'));
     });
-    document.getElementById('deletedBtn').addEventListener('click', openDeletedLogModal);
-    document.getElementById('importHistoryBtn').addEventListener('click', function () {
-      if (isAdmin(getCurrentUser())) openImportHistoryModal();
-    });
+    document.getElementById('navMoreBtn').addEventListener('click', openMoreSheet);
     document.addEventListener('click', function (e) {
       var chip = e.target.closest ? e.target.closest('[data-period]') : null;
       if (!chip) return;
@@ -4280,10 +4463,6 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       selectedIds = {};
       refreshFilterOptions(false);
       render();
-    });
-    document.getElementById('manageUsersBtn').addEventListener('click', function () {
-      if (!isAdmin(getCurrentUser())) return;
-      renderAdminPanel();
     });
     document.getElementById('addActivityBtn').addEventListener('click', requestAddActivity);
 
@@ -4348,11 +4527,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     });
 
     applyAllSettings();
-    document.getElementById('themeToggleBtn').addEventListener('click', function () {
-      settings.theme = resolvedTheme() === 'dark' ? 'light' : 'dark';
-      saveSettings();
-      applyAllSettings();
-    });
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
     document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
 
     // Ripple feedback on any button press — purely visual, no functional effect.
