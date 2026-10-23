@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="build-id" content="20261023173013">
+<meta name="build-id" content="20261023173505">
 <title>Planejamento Fiscal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1467,11 +1467,18 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return Object.keys(seen).sort().reverse();
   }
 
+  // Months that have data for the screen being viewed (goals in the Metas tab, activities elsewhere).
+  function viewPeriods() {
+    var seen = {};
+    (currentView === 'metas' ? visibleGoalsRaw() : visibleActivitiesRaw()).forEach(function (it) { seen[periodOfItem(it)] = true; });
+    return Object.keys(seen).sort().reverse();
+  }
+
   // The month shown by default is the current calendar month when it has data;
   // otherwise the most recent month that is not in the future; otherwise the earliest one.
   function resolvedPeriod() {
     if (activePeriod === 'all') return 'all';
-    var periods = allPeriods();
+    var periods = viewPeriods();
     if (activePeriod && periods.indexOf(activePeriod) !== -1) return activePeriod;
     var cur = currentPeriod();
     if (periods.indexOf(cur) !== -1) return cur;
@@ -1505,15 +1512,17 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   function renderPeriodBars() {
     var bars = document.querySelectorAll('.period-bar');
     if (!bars.length) return;
-    var periods = allPeriods();
     var sel = resolvedPeriod();
-    var acts = visibleActivitiesRaw();
+    // The chips list the months that have data for what is being viewed (goals in the
+    // Metas tab, activities elsewhere), so a month never shows up with a confusing "0".
+    var acts = currentView === 'metas' ? visibleGoalsRaw() : visibleActivitiesRaw();
+    var periods = viewPeriods();
     var cur = currentPeriod();
     var html = '<span class="period-title">Período</span>' +
       '<button type="button" class="period-chip' + (sel === 'all' ? ' is-active' : '') + '" data-period="all">Todos <span class="period-count">' + acts.length + '</span></button>';
     periods.forEach(function (p) {
       var inP = acts.filter(function (a) { return periodOfItem(a) === p; });
-      var late = inP.filter(isOverdue).length;
+      var late = currentView === 'metas' ? inP.filter(isGoalOverdue).length : inP.filter(isOverdue).length;
       html += '<button type="button" class="period-chip' + (sel === p ? ' is-active' : '') + (p === cur ? ' is-current' : '') + '" data-period="' + p + '">' +
         escapeHtml(periodLabel(p, true)) + ' <span class="period-count">' + inP.length + '</span>' +
         (late ? '<span class="period-alert" title="' + late + ' atrasada(s) neste mês">' + late + '</span>' : '') +
