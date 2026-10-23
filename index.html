@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="build-id" content="20260922142238">
+<meta name="build-id" content="20261023173013">
 <title>Planejamento Fiscal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -736,6 +736,295 @@
   }
   .report-table tbody tr:hover{background:var(--surface-2);}
   .report-table td:first-child{white-space:normal;min-width:180px;}
+
+  /* =====================================================================
+     v3 — layout moderno e limpo (sobrescreve o visual anterior)
+     ===================================================================== */
+  :root{
+    --bg:#f4f6f9;--surface:#ffffff;--surface-2:#eef1f6;--border:#e2e6ee;
+    --ink:#0f1a2b;--ink-muted:#5d6a7e;
+    --accent:#2457d6;--accent-strong:#1b44ae;--accent-ink:#ffffff;--accent-soft:#e8eefc;
+    --done:#13825a;--done-bg:#e3f5ec;--pending:#a8650a;--pending-bg:#fdf0da;
+    --danger:#cf3a3a;--danger-bg:#fde9e9;--danger-ink:#ffffff;
+    --radius-s:10px;--radius-m:14px;--radius-l:18px;
+    --shadow:0 1px 2px rgba(15,26,43,.05),0 6px 18px -10px rgba(15,26,43,.12);
+    --shadow-hover:0 2px 6px rgba(15,26,43,.07),0 14px 28px -14px rgba(15,26,43,.22);
+    --accent-grad:linear-gradient(var(--accent),var(--accent));
+    --surface-glass:#ffffff;--blur-glass:none;--aurora-opacity:.14;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c111a;--surface:#141b27;--surface-2:#1b2433;--border:#263145;
+      --ink:#e9eef6;--ink-muted:#97a3b6;
+      --accent:#7ba3ff;--accent-strong:#a5c0ff;--accent-ink:#0a1020;--accent-soft:#18274a;
+      --done:#4cc38a;--done-bg:#11301f;--pending:#e7b04e;--pending-bg:#33260e;
+      --danger:#f08a8a;--danger-bg:#3b1b1b;--danger-ink:#2a0c0c;
+      --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 22px -12px rgba(0,0,0,.6);
+      --shadow-hover:0 2px 8px rgba(0,0,0,.45),0 16px 32px -14px rgba(0,0,0,.7);
+      --surface-glass:#141b27;--aurora-opacity:.12;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c111a;--surface:#141b27;--surface-2:#1b2433;--border:#263145;
+    --ink:#e9eef6;--ink-muted:#97a3b6;
+    --accent:#7ba3ff;--accent-strong:#a5c0ff;--accent-ink:#0a1020;--accent-soft:#18274a;
+    --done:#4cc38a;--done-bg:#11301f;--pending:#e7b04e;--pending-bg:#33260e;
+    --danger:#f08a8a;--danger-bg:#3b1b1b;--danger-ink:#2a0c0c;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 22px -12px rgba(0,0,0,.6);
+    --shadow-hover:0 2px 8px rgba(0,0,0,.45),0 16px 32px -14px rgba(0,0,0,.7);
+    --surface-glass:#141b27;--aurora-opacity:.12;
+  }
+  html{background:var(--bg);}
+  body{font-size:15px;letter-spacing:-.005em;}
+  .bg-aurora{display:none;}
+  :root[data-bg="on"] .bg-aurora{display:block;}
+  .ico{width:1.15em;height:1.15em;flex:none;display:inline-block;vertical-align:-.2em;}
+  .btn .ico{margin-right:7px;vertical-align:-.22em;}
+  .btn-sm{padding:7px 12px;font-size:.8rem;}
+  .btn-icon .ico{margin:0;}
+  .btn-icon{padding:7px 9px;}
+  .btn{border-radius:var(--radius-s);font-weight:650;display:inline-flex;align-items:center;justify-content:center;}
+  .btn-primary{box-shadow:0 1px 2px rgba(15,26,43,.18);}
+  .btn-primary:hover:not(:disabled){transform:none;box-shadow:0 4px 12px -4px var(--accent);filter:brightness(1.05);}
+  .btn-ghost{background:var(--surface);}
+  .btn-ghost:hover:not(:disabled){background:var(--surface-2);border-color:var(--border);}
+  .row,.goal-card,.ticket-card{animation:none;}
+  .row:hover,.goal-card:hover,.ticket-card:hover{transform:none;box-shadow:var(--shadow-hover);}
+
+  /* ---- shell / sidebar ---- */
+  .app-shell{background:var(--bg);}
+  .sidebar{
+    flex:0 0 232px;width:232px;background:var(--surface);border-right:1px solid var(--border);
+    padding:20px 14px;gap:4px;backdrop-filter:none;-webkit-backdrop-filter:none;
+  }
+  .sidebar-nav-btn{
+    border-left:none;border-radius:var(--radius-s);padding:10px 12px;font-weight:600;font-size:.92rem;color:var(--ink-muted);gap:12px;
+  }
+  .sidebar-nav-btn:hover{background:var(--surface-2);color:var(--ink);}
+  .sidebar-nav-btn.is-active{background:var(--accent-soft);color:var(--accent-strong);border-left:none;}
+  .sidebar-nav-icon{display:flex;width:20px;height:20px;font-size:0;}
+  .sidebar-nav-icon .ico{width:20px;height:20px;}
+  .sidebar-footer{flex-direction:row;justify-content:flex-start;gap:8px;border-top:1px solid var(--border);padding-top:14px;}
+  .sidebar-icon-btn{width:36px;height:36px;border-radius:var(--radius-s);background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;color:var(--ink-muted);}
+  .sidebar-icon-btn:hover{background:var(--surface-2);border-color:var(--border);transform:none;color:var(--ink);}
+  .sidebar-icon-btn .ico{width:18px;height:18px;}
+  .sidebar-collapse-btn{margin-left:auto;border-radius:var(--radius-s);width:30px;height:30px;opacity:1;background:var(--surface);color:var(--ink-muted);}
+  .sidebar-collapse-btn .ico{width:14px;height:14px;transform:rotate(180deg);}
+  .sidebar.is-collapsed .sidebar-collapse-btn .ico{transform:none;}
+  .sidebar.is-collapsed{flex:0 0 68px;width:68px;padding-left:10px;padding-right:10px;}
+  .sidebar.is-collapsed .sidebar-nav-btn{justify-content:center;padding:11px 6px;}
+  .sidebar.is-collapsed .sidebar-nav-btn.is-active{box-shadow:none;}
+  .sidebar.is-collapsed .sidebar-footer{flex-direction:column;align-items:center;}
+  .sidebar.is-collapsed .sidebar-collapse-btn{margin-left:0;transform:none;}
+  .page{max-width:1120px;padding:26px 28px 90px;}
+
+  /* ---- topbar ---- */
+  .topbar{margin-bottom:18px;align-items:center;}
+  .brand{align-items:center;}
+  .brand-mark{height:44px;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);}
+  .brand h1{font-size:1.45rem;font-weight:800;letter-spacing:-.02em;margin:0;}
+  .brand .muted{font-size:.84rem;margin-top:2px;}
+  .viewer-badge{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:999px;box-shadow:none;}
+  .status-banner{border-radius:var(--radius-m);border:1px solid color-mix(in srgb,var(--pending) 30%,transparent);}
+
+  /* ---- period bar ---- */
+  .period-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px;}
+  .period-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);margin-right:2px;}
+  .period-chip{
+    font-family:inherit;font-size:.82rem;font-weight:650;cursor:pointer;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--border);border-radius:999px;padding:6px 13px;
+    display:inline-flex;align-items:center;gap:7px;transition:all .15s var(--ease);
+  }
+  .period-chip:hover{color:var(--ink);border-color:var(--ink-muted);}
+  .period-chip.is-active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
+  .period-chip.is-current:not(.is-active)::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .period-count{font-family:var(--font-mono);font-size:.72rem;font-weight:600;opacity:.75;}
+  .period-alert{background:var(--danger);color:#fff;border-radius:999px;font-size:.68rem;font-weight:700;padding:1px 6px;line-height:1.3;}
+  .period-chip.is-active .period-alert{background:#fff;color:var(--danger);}
+  .db-meter{margin-left:auto;font-size:.74rem;color:var(--ink-muted);background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-family:var(--font-mono);}
+  .db-meter.is-warn{color:var(--pending);background:var(--pending-bg);border-color:transparent;}
+  .db-meter.is-danger{color:var(--danger);background:var(--danger-bg);border-color:transparent;}
+
+  /* ---- KPI cards ---- */
+  .summary-card{
+    background:transparent;border:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+    padding:0;display:block;margin-bottom:18px;
+  }
+  .summary-actions{flex-direction:row;justify-content:flex-end;gap:8px;margin:0 0 10px;flex-wrap:wrap;}
+  .kpi-grid{display:grid;grid-template-columns:minmax(260px,1.5fr) repeat(4,minmax(110px,1fr));gap:12px;}
+  .kpi{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);
+    padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;justify-content:center;
+    border-top:3px solid var(--border);
+  }
+  .kpi span{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);}
+  .kpi strong{font-family:var(--font-mono);font-size:1.9rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;}
+  .kpi-done{border-top-color:var(--done);}
+  .kpi-done strong{color:var(--done);}
+  .kpi-progress{border-top-color:var(--accent);}
+  .kpi-progress strong{color:var(--accent);}
+  .kpi-danger{border-top-color:var(--danger);}
+  .kpi-danger strong{color:var(--danger);}
+  .kpi-hero{flex-direction:row;align-items:center;gap:16px;border-top-color:var(--accent);}
+  .kpi-hero-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
+  .kpi-hero-text strong{font-size:1.25rem;font-family:var(--font-sans);font-weight:800;letter-spacing:-.01em;}
+  .kpi-hero-text span{text-transform:none;letter-spacing:0;font-size:.82rem;font-weight:500;}
+  .summary-ring{width:68px;height:68px;box-shadow:none;background:conic-gradient(var(--accent) calc(var(--pct)*1%),var(--surface-2) 0);}
+  .summary-ring::before{inset:8px;}
+  .summary-ring span{font-size:.92rem;font-weight:700;text-transform:none;letter-spacing:0;color:var(--ink);}
+  .summary-bar{height:6px;}
+  .summary-bar-fill{background:var(--accent);}
+  @media (max-width:980px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.kpi-hero{grid-column:1/-1;}}
+  @media (max-width:420px){.kpi strong{font-size:1.6rem;}}
+
+  /* ---- filters ---- */
+  .filters-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);box-shadow:var(--shadow);
+    padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;
+  }
+  .filters-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .filters-card input[type="search"],.filters-card select,.toolbar input[type="search"],.toolbar select,
+  .modal select,.modal input[type="date"]{
+    font-family:inherit;font-size:.88rem;color:var(--ink);background:var(--bg);
+    border:1px solid var(--border);border-radius:var(--radius-s);padding:9px 12px;
+  }
+  .filters-card input[type="search"]{flex:2 1 240px;min-width:180px;}
+  .filters-card .filters-row:first-child select{flex:1 1 150px;max-width:none;min-width:130px;}
+  .filters-row-2{justify-content:space-between;gap:10px 14px;}
+  .status-chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .status-chip{
+    font-family:inherit;font-size:.8rem;font-weight:650;cursor:pointer;color:var(--ink-muted);
+    background:transparent;border:1px solid var(--border);border-radius:999px;padding:6px 12px;
+    display:inline-flex;align-items:center;gap:7px;transition:all .15s var(--ease);
+  }
+  .status-chip:hover{color:var(--ink);background:var(--surface-2);}
+  .status-chip.is-active{background:var(--ink);border-color:var(--ink);color:var(--bg);}
+  .status-chip-count{font-family:var(--font-mono);font-size:.72rem;font-weight:600;background:var(--surface-2);color:var(--ink-muted);border-radius:999px;padding:1px 7px;}
+  .status-chip.is-active .status-chip-count{background:rgba(255,255,255,.2);color:inherit;}
+  :root[data-theme="dark"] .status-chip.is-active .status-chip-count{background:rgba(0,0,0,.15);}
+  .status-chip.chip-overdue:not(.is-active) .status-chip-count{background:var(--danger-bg);color:var(--danger);}
+  .view-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .select-inline{display:flex;align-items:center;gap:7px;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);}
+  .select-inline select{text-transform:none;letter-spacing:0;font-weight:500;padding:7px 10px;}
+  .actions-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .actions-bar .spacer,.toolbar .spacer{flex:1 1 auto;}
+  .toolbar{margin-bottom:14px;}
+
+  /* ---- groups & rows ---- */
+  .cat-group{margin-bottom:14px;}
+  .cat-header{
+    width:100%;display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:8px 10px;
+    background:transparent;border:none;border-radius:var(--radius-s);cursor:pointer;font-family:inherit;color:var(--ink);text-align:left;
+  }
+  .cat-header:hover{background:var(--surface-2);}
+  .cat-chevron{display:flex;color:var(--ink-muted);transition:transform .18s var(--ease);transform:rotate(90deg);}
+  .cat-chevron .ico{width:16px;height:16px;}
+  .cat-group.is-collapsed .cat-chevron{transform:rotate(0deg);}
+  .cat-group.is-collapsed .cat-header{margin-bottom:0;}
+  .cat-title{font-weight:750;font-size:.92rem;letter-spacing:-.01em;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .cat-bar{flex:1 1 60px;max-width:160px;height:5px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-left:4px;}
+  .cat-bar i{display:block;height:100%;background:var(--done);border-radius:999px;transition:width .3s var(--ease);}
+  .cat-header .cat-progress{margin-left:auto;font-size:.78rem;color:var(--ink-muted);}
+  .cat-rows{display:flex;flex-direction:column;gap:8px;}
+
+  .row{
+    position:relative;border-radius:var(--radius-m);padding:13px 16px;gap:14px;align-items:center;
+    border:1px solid var(--border);border-left:4px solid var(--border);box-shadow:none;
+  }
+  .row:hover{box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--ink-muted) 35%,var(--border));}
+  .row.is-in-progress{border-left-color:var(--accent);}
+  .row.is-done{opacity:1;border-left-color:var(--done);background:color-mix(in srgb,var(--done-bg) 35%,var(--surface));}
+  .row.is-overdue{border-left:4px solid var(--danger);}
+  .row.is-done .row-title{text-decoration:none;color:var(--ink-muted);}
+  .row-title{font-weight:650;font-size:.96rem;letter-spacing:-.01em;}
+  .row-meta{gap:6px;margin-top:7px;}
+  .chip{font-size:.74rem;font-weight:550;background:var(--surface-2);color:var(--ink-muted);padding:3px 9px;}
+  .due-chip{color:var(--ink);}
+  .due-chip.is-overdue{color:var(--danger);background:var(--danger-bg);}
+  .toggle{width:26px;height:26px;margin-top:0;border-width:2px;align-self:center;}
+  .row.is-in-progress .toggle{border-color:var(--accent);}
+  .row.is-in-progress .toggle .toggle-dot{background:var(--accent);}
+  .row-select{margin-top:0;align-self:center;}
+  .row-status{max-width:190px;min-width:110px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+  .status-pending,.status-overdue,.status-in-progress{font-size:.76rem;padding:4px 11px;}
+  .status-in-progress{background:var(--accent-soft);color:var(--accent-strong);}
+  .row-actions{display:flex;gap:6px;opacity:0;transform:translateY(2px);transition:opacity .15s var(--ease),transform .15s var(--ease);}
+  .row:hover .row-actions,.row:focus-within .row-actions{opacity:1;transform:none;}
+  @media (hover:none){.row-actions{opacity:1;transform:none;}}
+  .row-edit,.row-delete{
+    display:inline-flex;align-items:center;gap:5px;margin:0;background:var(--surface);border:1px solid var(--border);
+    color:var(--ink-muted);border-radius:8px;padding:4px 9px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:inherit;
+  }
+  .row-edit .ico,.row-delete .ico,.row-audit-btn .ico{width:13px;height:13px;margin:0;}
+  .row-edit:hover:not(:disabled){background:var(--accent-soft);color:var(--accent-strong);border-color:var(--accent);}
+  .row-edit:disabled{opacity:.5;cursor:not-allowed;}
+  .row-audit-btn{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-weight:600;color:var(--ink-muted);padding:3px 0;margin-top:6px;}
+  .row-audit-btn:hover{color:var(--accent);}
+  .row-comment{margin-top:8px;}
+  .goal-card{border-radius:var(--radius-m);box-shadow:none;}
+  .goal-progress-bar{height:6px;}
+  .goal-progress-fill{background:var(--accent);}
+
+  /* ---- dashboard ---- */
+  .dash-kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+  .dash-kpi{box-shadow:none;border-top:3px solid var(--border);}
+  .dash-kpi.is-done{border-top-color:var(--done);}
+  .dash-kpi.is-danger{border-top-color:var(--danger);}
+  .dash-kpi.is-accent{border-top-color:var(--accent);}
+  .dash-section-header h2{font-size:1rem;letter-spacing:-.01em;}
+
+  /* ---- modals / forms ---- */
+  .modal-backdrop{background:rgba(10,16,28,.5);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+  .modal{border-radius:var(--radius-l);border:1px solid var(--border);padding:26px;max-width:460px;}
+  .modal h3{font-size:1.15rem;letter-spacing:-.01em;margin-bottom:8px;}
+  .modal input[type="text"],.modal textarea{background:var(--bg);border-radius:var(--radius-s);}
+  .modal select,.modal input[type="date"]{width:100%;margin-bottom:6px;}
+  .import-safe{
+    display:flex;gap:8px;background:var(--done-bg);color:var(--done);border-radius:var(--radius-s);
+    padding:10px 12px;font-size:.82rem;font-weight:550;line-height:1.4;margin:12px 0;
+  }
+  .import-summary{background:var(--surface-2);border-radius:var(--radius-s);padding:12px 14px;}
+  .import-summary strong{font-size:.95rem;}
+  .userlist.import-log li{align-items:flex-start;}
+  .toast{border-radius:var(--radius-m);padding:11px 18px;font-weight:550;}
+  .login-card{border-radius:var(--radius-l);}
+  .empty-state{border-radius:var(--radius-l);background:var(--surface);}
+  .scroll-top-btn{background:var(--accent);box-shadow:var(--shadow-hover);}
+
+  /* ---- mobile: barra de navegação inferior ---- */
+  @media (max-width:640px){
+    .app-shell{flex-direction:column;}
+    .sidebar{
+      position:fixed;left:0;right:0;bottom:0;top:auto;z-index:45;width:auto;height:auto;flex:none;
+      flex-direction:row;align-items:center;justify-content:space-around;gap:2px;
+      border-right:none;border-top:1px solid var(--border);padding:6px 8px calc(6px + env(safe-area-inset-bottom));overflow:visible;
+    }
+    .sidebar-nav-btn{flex-direction:column;gap:3px;padding:6px 4px;width:auto;flex:1 1 0;font-size:.66rem;align-items:center;justify-content:center;}
+    .sidebar-nav-btn .sidebar-nav-label{display:block;}
+    .sidebar.is-collapsed .sidebar-nav-label{display:block;}
+    .sidebar.is-collapsed{width:auto;flex:none;padding:6px 8px calc(6px + env(safe-area-inset-bottom));}
+    .sidebar-footer{margin:0;flex-direction:row;border:none;padding:0;gap:2px;}
+    .sidebar-icon-btn{width:34px;height:34px;border:none;}
+    .sidebar-collapse-btn{display:none;}
+    .page{padding:16px 14px 96px;}
+    .brand h1{font-size:1.2rem;}
+    .kpi-grid{gap:8px;}
+    .filters-card input[type="search"]{flex:1 1 100%;}
+    .view-controls{width:100%;}
+    .select-inline{flex:1;}
+    .select-inline select{flex:1;min-width:0;}
+    .row{align-items:flex-start;flex-wrap:wrap;}
+    .row-status{align-items:flex-start;max-width:none;width:100%;margin-left:40px;flex-direction:row;flex-wrap:wrap;align-items:center;}
+    .row-actions{margin-left:auto;}
+    .scroll-top-btn{bottom:80px;}
+    .db-meter{margin-left:0;}
+  }
+  [hidden]{display:none !important;}
+  #dashboardUserSelect{min-width:min(100%,300px);}
+  @media (max-width:640px){
+    .row-main{flex:1 1 0;min-width:0;}
+    .row-status{flex:1 1 100%;}
+  }
 </style>
 
 </head>
@@ -745,21 +1034,21 @@
 <div class="app-shell">
   <nav class="sidebar" id="sidebarNav">
     <button class="sidebar-nav-btn is-active" type="button" id="navActivities" data-view="atividades">
-      <span class="sidebar-nav-icon" aria-hidden="true">📋</span><span class="sidebar-nav-label"> Atividades</span>
+      <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6.5l1.5 1.5 2.5-3M3.5 12.5l1.5 1.5 2.5-3M3.5 18.5l1.5 1.5 2.5-3"/></svg></span><span class="sidebar-nav-label">Atividades</span>
     </button>
     <button class="sidebar-nav-btn" type="button" id="navGoals" data-view="metas">
-      <span class="sidebar-nav-icon" aria-hidden="true">🎯</span><span class="sidebar-nav-label"> Metas</span>
+      <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></span><span class="sidebar-nav-label">Metas</span>
     </button>
     <button class="sidebar-nav-btn" type="button" id="navTickets" data-view="tickets">
-      <span class="sidebar-nav-icon" aria-hidden="true">🗒️</span><span class="sidebar-nav-label"> Meu Dia</span>
+      <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="sidebar-nav-label">Meu Dia</span>
     </button>
     <button class="sidebar-nav-btn" type="button" id="navDashboard" data-view="dashboard" hidden>
-      <span class="sidebar-nav-icon" aria-hidden="true">📊</span><span class="sidebar-nav-label"> Dashboard</span>
+      <span class="sidebar-nav-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span><span class="sidebar-nav-label">Dashboard</span>
     </button>
     <div class="sidebar-footer">
-      <button class="sidebar-icon-btn" id="settingsBtn" type="button" title="Configurações" aria-label="Configurações">⚙️</button>
-      <button class="sidebar-icon-btn" id="themeToggleBtn" type="button" title="Alternar tema" aria-label="Alternar tema">🌙</button>
-      <button class="sidebar-collapse-btn" type="button" id="sidebarCollapseBtn" title="Recolher menu" aria-label="Recolher menu">‹</button>
+      <button class="sidebar-icon-btn" id="settingsBtn" type="button" title="Configurações" aria-label="Configurações"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
+      <button class="sidebar-icon-btn" id="themeToggleBtn" type="button" title="Alternar tema" aria-label="Alternar tema"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>
+      <button class="sidebar-collapse-btn" type="button" id="sidebarCollapseBtn" title="Recolher menu" aria-label="Recolher menu"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
   </nav>
 
@@ -782,34 +1071,63 @@
     </div>
 
     <div id="viewActivities">
+      <section class="period-bar" aria-label="Período"></section>
       <section class="summary-card" id="summaryCard" aria-live="polite"></section>
 
-      <section class="toolbar">
-        <input type="search" id="searchInput" placeholder="Buscar atividade, empresa ou CNPJ..." aria-label="Buscar atividade">
-        <select id="filterResp" aria-label="Filtrar por responsável"><option value="all">Todos os responsáveis</option></select>
-        <select id="filterEmpresa" aria-label="Filtrar por empresa"><option value="all">Todas as empresas</option></select>
-        <select id="filterDept" aria-label="Filtrar por departamento" hidden>
-          <option value="all">Todos os departamentos</option>
-          <option value="fiscal">Fiscal</option>
-          <option value="contabil">Contábil</option>
-          <option value="agro">Agro</option>
-        </select>
-        <select id="filterStatus" aria-label="Filtrar por status">
-          <option value="all">Todos os status</option>
-          <option value="pending">Pendentes</option>
-          <option value="in_progress">Em andamento</option>
-          <option value="overdue">Atrasadas</option>
-          <option value="done">Finalizadas</option>
-        </select>
-        <div class="spacer"></div>
+      <section class="filters-card">
+        <div class="filters-row">
+          <input type="search" id="searchInput" placeholder="Buscar atividade, empresa ou CNPJ..." aria-label="Buscar atividade">
+          <select id="filterResp" aria-label="Filtrar por responsável"><option value="all">Todos os responsáveis</option></select>
+          <select id="filterEmpresa" aria-label="Filtrar por empresa"><option value="all">Todas as empresas</option></select>
+          <select id="filterDept" aria-label="Filtrar por departamento" hidden>
+            <option value="all">Todos os departamentos</option>
+            <option value="fiscal">Fiscal</option>
+            <option value="contabil">Contábil</option>
+            <option value="agro">Agro</option>
+          </select>
+        </div>
+        <div class="filters-row filters-row-2">
+          <div class="status-chips" id="statusChips" role="group" aria-label="Filtrar por status"></div>
+          <div class="view-controls">
+            <label class="select-inline">Ordenar
+              <select id="sortSelect" aria-label="Ordenar por">
+                <option value="due">Prazo</option>
+                <option value="name">Nome (A–Z)</option>
+                <option value="status">Status</option>
+              </select>
+            </label>
+            <label class="select-inline">Agrupar
+              <select id="groupSelect" aria-label="Agrupar por">
+                <option value="empresa">Empresa</option>
+                <option value="resp">Responsável</option>
+                <option value="status">Status</option>
+                <option value="none">Sem grupos</option>
+              </select>
+            </label>
+            <button class="btn btn-ghost btn-sm btn-icon" id="collapseAllBtn" type="button" title="Recolher / expandir grupos" aria-label="Recolher ou expandir grupos"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9l5-5 5 5M7 15l5 5 5-5"/></svg></button>
+          </div>
+          <select id="filterStatus" aria-label="Filtrar por status" hidden>
+            <option value="all">Todos os status</option>
+            <option value="pending">Pendentes</option>
+            <option value="in_progress">Em andamento</option>
+            <option value="overdue">Atrasadas</option>
+            <option value="done">Finalizadas</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="actions-bar">
         <label class="bulk-select" id="selectAllWrap" hidden>
           <input type="checkbox" id="selectAllVisible" aria-label="Selecionar todas as atividades visíveis">
           Selecionar tudo
         </label>
-        <button class="btn btn-danger" id="deleteSelectedBtn" type="button" hidden disabled>Excluir selecionadas</button>
-        <button class="btn btn-ghost" id="manageUsersBtn" type="button" hidden>Gerenciar usuários</button>
-        <button class="btn btn-primary" id="importBtn" type="button" hidden>Importar planilha</button>
-        <button class="btn btn-primary" id="addActivityBtn" type="button" hidden>+ Nova atividade</button>
+        <button class="btn btn-danger btn-sm" id="deleteSelectedBtn" type="button" hidden disabled>Excluir selecionadas</button>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost btn-sm" id="manageUsersBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.1 2.2 3.5 5.2"/></svg>Usuários</button>
+        <button class="btn btn-ghost btn-sm" id="importHistoryBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Importações</button>
+        <button class="btn btn-ghost btn-sm" id="backupBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>Backup</button>
+        <button class="btn btn-ghost" id="importBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>Importar planilha</button>
+        <button class="btn btn-primary" id="addActivityBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova atividade</button>
         <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
       </section>
 
@@ -817,13 +1135,14 @@
     </div>
 
     <div id="viewGoals" hidden>
+      <section class="period-bar" aria-label="Período"></section>
       <section class="summary-card" id="goalsSummaryCard" aria-live="polite"></section>
 
       <section class="toolbar">
         <input type="search" id="goalSearchInput" placeholder="Buscar meta, responsável ou empresa..." aria-label="Buscar meta">
         <div class="spacer"></div>
-        <button class="btn btn-ghost" id="importGoalsBtn" type="button" hidden>Importar planilha de metas</button>
-        <button class="btn btn-primary" id="addGoalBtn" type="button" hidden>+ Nova meta</button>
+        <button class="btn btn-ghost" id="importGoalsBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>Importar metas</button>
+        <button class="btn btn-primary" id="addGoalBtn" type="button" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova meta</button>
         <input type="file" id="goalFileInput" accept=".xlsx,.xls,.csv" hidden>
       </section>
 
@@ -840,7 +1159,7 @@
         <button class="ticket-day-btn" type="button" id="ticketNextDay" title="Próximo dia" aria-label="Próximo dia">›</button>
         <button class="btn btn-ghost" type="button" id="ticketTodayBtn">Hoje</button>
         <div class="spacer"></div>
-        <button class="btn btn-primary" type="button" id="addTicketBtn" hidden>+ Novo ticket</button>
+        <button class="btn btn-primary" type="button" id="addTicketBtn" hidden><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo ticket</button>
       </section>
 
       <p class="ticket-hint muted">Seus tickets são pessoais — só você vê e organiza o seu dia aqui.</p>
@@ -849,6 +1168,7 @@
     </div>
 
     <div id="viewDashboard" hidden>
+      <section class="period-bar" aria-label="Período"></section>
       <section class="toolbar">
         <select id="dashboardUserSelect" aria-label="Selecionar colaborador"></select>
         <div class="spacer"></div>
@@ -892,13 +1212,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   var stateEl = document.getElementById('app-state');
   var INITIAL_STATE = JSON.parse(stateEl.textContent);
   var STATE = JSON.parse(JSON.stringify(INITIAL_STATE));
-  if (!STATE.users) STATE.users = [];
-  if (!STATE.goals) STATE.goals = [];
-  if (!STATE.tickets) STATE.tickets = [];
-  if (!STATE.activities) STATE.activities = [];
-  STATE.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
-  STATE.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; });
-  STATE.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; });
+  normalizeState(STATE);
   var firestoreReady = false;
   var firestoreError = false;
   var docRef = null;
@@ -909,7 +1223,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   try { sidebarCollapsed = localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1'; } catch (e) {}
   var SETTINGS_KEY = 'planningApp.settings.v2';
   var LEGACY_THEME_KEY = 'planningApp.theme.v1';
-  var DEFAULT_SETTINGS = { theme: 'auto', accent: 'blue', density: 'comfortable', bg: 'on', motion: 'on' };
+  var DEFAULT_SETTINGS = { theme: 'auto', accent: 'blue', density: 'comfortable', bg: 'off', motion: 'on' };
   var settings = loadSettings();
 
   function loadSettings() {
@@ -931,6 +1245,23 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   function saveSettings() {
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
   }
+
+  var ICONS = {"chevron": "<path d=\"M9 6l6 6-6 6\"/>", "edit": "<path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z\"/>", "trash": "<path d=\"M3 6h18\"/><path d=\"M8 6V4h8v2\"/><path d=\"M19 6l-1 14H6L5 6\"/><path d=\"M10 11v6M14 11v6\"/>", "report": "<path d=\"M18 20V10M12 20V4M6 20v-6\"/>", "calendar": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"3\"/><path d=\"M3 10h18M8 3v4M16 3v4\"/>", "refresh": "<path d=\"M21 12a9 9 0 1 1-3-6.7\"/><path d=\"M21 4v5h-5\"/>", "download": "<path d=\"M12 4v11\"/><path d=\"M7 11l5 5 5-5\"/><path d=\"M5 20h14\"/>", "upload": "<path d=\"M12 16V5\"/><path d=\"M7 9l5-5 5 5\"/><path d=\"M5 20h14\"/>", "history": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "plus": "<path d=\"M12 5v14M5 12h14\"/>", "users": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5\"/><path d=\"M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.1 2.2 3.5 5.2\"/>", "list": "<path d=\"M9 6h11M9 12h11M9 18h11\"/><path d=\"M3.5 6.5l1.5 1.5 2.5-3M3.5 12.5l1.5 1.5 2.5-3M3.5 18.5l1.5 1.5 2.5-3\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.2\"/>", "dashboard": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"9\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\" rx=\"2\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\" rx=\"2\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\" rx=\"2\"/>", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/>", "moon": "<path d=\"M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z\"/>", "settings": "<path d=\"M4 7h9M17 7h3M4 17h3M11 17h9\"/><circle cx=\"15\" cy=\"7\" r=\"2\"/><circle cx=\"9\" cy=\"17\" r=\"2\"/>", "collapse": "<path d=\"M7 9l5-5 5 5M7 15l5 5 5-5\"/>", "shield": "<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/><path d=\"M9 12l2 2 4-4\"/>"};
+  function ico(name) {
+    return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+  }
+
+  // ---------- list view preferences (sort / group), remembered per browser ----------
+  var VIEW_KEY = 'planningApp.view.v1';
+  var viewSettings = { sort: 'due', group: 'empresa' };
+  try {
+    var rawView = JSON.parse(localStorage.getItem(VIEW_KEY) || 'null');
+    if (rawView && ['due', 'name', 'status'].indexOf(rawView.sort) !== -1) viewSettings.sort = rawView.sort;
+    if (rawView && ['empresa', 'resp', 'status', 'none'].indexOf(rawView.group) !== -1) viewSettings.group = rawView.group;
+  } catch (e) {}
+  function saveViewSettings() { try { localStorage.setItem(VIEW_KEY, JSON.stringify(viewSettings)); } catch (e) {} }
+  var collapsedGroups = {};
+  var lastGroupKeys = [];
 
   applyAllSettings();
   if (window.matchMedia) {
@@ -1085,6 +1416,118 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return completed.getTime() > dueEnd.getTime();
   }
 
+  // ---------- períodos (histórico mensal) ----------
+  //
+  // Every activity and goal belongs to one month ("period", YYYY-MM). Uploading a new
+  // spreadsheet only ever ADDS rows to the chosen period — it never removes or rewrites
+  // anything that is already there, so previous months stay intact as history.
+  // Rows saved before this feature existed have no period yet; they get one derived
+  // from their due date (falling back to the completion date, then the current month)
+  // the first time they are loaded, and that value is saved with the next write.
+
+  var PERIOD_KEY = 'planningApp.period.v1';
+  var activePeriod = null; // null = automatic, 'all' = every month, or 'YYYY-MM'
+  try { activePeriod = localStorage.getItem(PERIOD_KEY) || null; } catch (e) {}
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function currentPeriod() { var t = new Date(); return t.getFullYear() + '-' + pad2(t.getMonth() + 1); }
+  function periodOfDueDate(str) {
+    var d = parseDueDate(str);
+    return d ? d.getFullYear() + '-' + pad2(d.getMonth() + 1) : null;
+  }
+  function periodOfItem(item) {
+    if (item && item.period && /^\d{4}-\d{2}$/.test(item.period)) return item.period;
+    if (!item) return currentPeriod();
+    return periodOfDueDate(item.dueDate) ||
+      (item.completedAt && /^\d{4}-\d{2}/.test(String(item.completedAt)) ? String(item.completedAt).slice(0, 7) : null) ||
+      currentPeriod();
+  }
+  function periodLabel(p, short) {
+    var m = /^(\d{4})-(\d{2})$/.exec(p || '');
+    if (!m) return 'Todos os meses';
+    var name = MONTH_LABELS[parseInt(m[2], 10) - 1] || m[2];
+    return (short ? name.slice(0, 3) : name) + '/' + m[1];
+  }
+
+  function normalizeState(S) {
+    if (!S.users) S.users = [];
+    if (!S.goals) S.goals = [];
+    if (!S.tickets) S.tickets = [];
+    if (!S.activities) S.activities = [];
+    if (!S.importLog) S.importLog = [];
+    S.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
+    S.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; if (!a.period) a.period = periodOfItem(a); });
+    S.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; if (!g.period) g.period = periodOfItem(g); });
+    return S;
+  }
+
+  function allPeriods() {
+    var seen = {};
+    visibleActivitiesRaw().concat(visibleGoalsRaw()).forEach(function (it) { seen[periodOfItem(it)] = true; });
+    return Object.keys(seen).sort().reverse();
+  }
+
+  // The month shown by default is the current calendar month when it has data;
+  // otherwise the most recent month that is not in the future; otherwise the earliest one.
+  function resolvedPeriod() {
+    if (activePeriod === 'all') return 'all';
+    var periods = allPeriods();
+    if (activePeriod && periods.indexOf(activePeriod) !== -1) return activePeriod;
+    var cur = currentPeriod();
+    if (periods.indexOf(cur) !== -1) return cur;
+    for (var i = 0; i < periods.length; i++) { if (periods[i] <= cur) return periods[i]; }
+    return periods.length ? periods[periods.length - 1] : 'all';
+  }
+
+  function setActivePeriod(p) {
+    activePeriod = p;
+    try { localStorage.setItem(PERIOD_KEY, p); } catch (e) {}
+  }
+
+  function periodScoped(list) {
+    var p = resolvedPeriod();
+    if (p === 'all') return list;
+    return list.filter(function (it) { return periodOfItem(it) === p; });
+  }
+
+  // Period for something created by hand: the month currently being viewed, or (when
+  // viewing "Todos") the month of its due date.
+  function newItemPeriod(dueDate) {
+    var p = resolvedPeriod();
+    return p !== 'all' ? p : (periodOfDueDate(dueDate) || currentPeriod());
+  }
+
+  function stateSizeBytes() {
+    try { return new Blob([JSON.stringify(STATE)]).size; } catch (e) { return 0; }
+  }
+  var DOC_LIMIT_BYTES = 1048576;
+
+  function renderPeriodBars() {
+    var bars = document.querySelectorAll('.period-bar');
+    if (!bars.length) return;
+    var periods = allPeriods();
+    var sel = resolvedPeriod();
+    var acts = visibleActivitiesRaw();
+    var cur = currentPeriod();
+    var html = '<span class="period-title">Período</span>' +
+      '<button type="button" class="period-chip' + (sel === 'all' ? ' is-active' : '') + '" data-period="all">Todos <span class="period-count">' + acts.length + '</span></button>';
+    periods.forEach(function (p) {
+      var inP = acts.filter(function (a) { return periodOfItem(a) === p; });
+      var late = inP.filter(isOverdue).length;
+      html += '<button type="button" class="period-chip' + (sel === p ? ' is-active' : '') + (p === cur ? ' is-current' : '') + '" data-period="' + p + '">' +
+        escapeHtml(periodLabel(p, true)) + ' <span class="period-count">' + inP.length + '</span>' +
+        (late ? '<span class="period-alert" title="' + late + ' atrasada(s) neste mês">' + late + '</span>' : '') +
+        '</button>';
+    });
+    if (isAdmin(getCurrentUser())) {
+      var size = stateSizeBytes();
+      var pct = Math.round(size / DOC_LIMIT_BYTES * 100);
+      html += '<span class="db-meter' + (pct >= 80 ? ' is-danger' : (pct >= 60 ? ' is-warn' : '')) + '" title="Espaço usado pelo banco de dados compartilhado (limite de 1 MB por documento).">' +
+        'Banco: ' + Math.max(1, Math.round(size / 1024)) + ' KB (' + pct + '%)</span>';
+    }
+    for (var i = 0; i < bars.length; i++) bars[i].innerHTML = html;
+  }
+
   // ---------- users / login ----------
 
   function findUserByName(name) {
@@ -1194,13 +1637,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         docRef.onSnapshot(function (snap) {
           if (snap.exists) {
             STATE = snap.data();
-            if (!STATE.users) STATE.users = [];
-            if (!STATE.goals) STATE.goals = [];
-            if (!STATE.tickets) STATE.tickets = [];
-            if (!STATE.activities) STATE.activities = [];
-            STATE.users.forEach(function (u) { if (!u.department) u.department = 'fiscal'; });
-            STATE.activities.forEach(function (a) { if (!a.department) a.department = 'fiscal'; });
-            STATE.goals.forEach(function (g) { if (!g.department) g.department = 'fiscal'; });
+            normalizeState(STATE);
             firestoreReady = true;
             firestoreError = false;
             render();
@@ -1271,6 +1708,70 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) checkForUpdate();
     });
+  }
+
+  // ---------- safe writes: transaction + automatic backup ----------
+  //
+  // persist() writes the whole local copy of the state, so a stale tab could overwrite
+  // what someone else saved a moment ago. Anything that adds data in bulk (spreadsheet
+  // import, undo) or edits one record goes through here instead: it re-reads the latest
+  // shared state inside a Firestore transaction, applies the change to THAT copy, and
+  // writes it back — so nothing saved by anyone else in the meantime can be lost. For
+  // imports a copy of the state as it was BEFORE the change is also saved next to it
+  // (planner/backup_antes_da_ultima_importacao). If the database rules refuse that extra
+  // document, the change is still applied and the caller is told no backup was stored.
+
+  function runSafeMutation(mutator, opts) {
+    opts = opts || {};
+    if (!docRef || !firestoreReady) return Promise.reject(new Error('offline'));
+    var fs = firebase.firestore();
+    var user = getCurrentUser();
+    function attempt(withBackup) {
+      var outcome = { backedUp: false };
+      return fs.runTransaction(function (tx) {
+        return tx.get(docRef).then(function (snap) {
+          var remote = snap.exists ? snap.data() : JSON.parse(JSON.stringify(STATE));
+          var beforeJson = JSON.stringify(remote);
+          normalizeState(remote);
+          outcome.result = mutator(remote);
+          remote.updatedAt = new Date().toISOString();
+          outcome.state = remote;
+          outcome.backedUp = false;
+          tx.set(docRef, remote);
+          if (withBackup && beforeJson.length < 400000) {
+            tx.set(fs.collection('planner').doc('backup_antes_da_ultima_importacao'), {
+              savedAt: remote.updatedAt,
+              reason: opts.reason || 'alteracao',
+              by: user ? user.name : null,
+              state: JSON.parse(beforeJson)
+            });
+            outcome.backedUp = true;
+          }
+        });
+      }).then(function () { return outcome; });
+    }
+    return attempt(!!opts.backup).catch(function (err) {
+      if (opts.backup && err && err.code === 'permission-denied') return attempt(false);
+      throw err;
+    }).then(function (outcome) {
+      STATE = outcome.state;
+      normalizeState(STATE);
+      render();
+      return outcome;
+    });
+  }
+
+  function exportBackup() {
+    var stamp = new Date().toISOString().slice(0, 10);
+    var blob = new Blob([JSON.stringify(STATE, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'planejamento-backup-' + stamp + '.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { a.remove(); URL.revokeObjectURL(url); }, 500);
+    showToast('Backup gerado (' + Math.round(stateSizeBytes() / 1024) + ' KB).');
   }
 
   // ---------- import ----------
@@ -1344,47 +1845,48 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return { items: items, detected: cols, monthFirstFixed: monthFirstFixed };
   }
 
-  // Only activities already tagged with importDept are candidates for matching/removal —
-  // activities belonging to other departments are passed through completely untouched.
-  // Without this, importing one department's spreadsheet would wipe out every other
-  // department's activities, since they simply don't appear in that file.
-  function mergeActivities(existing, incoming, importDept) {
-    var inDept = existing.filter(function (a) { return itemDepartment(a) === importDept; });
-    var outDept = existing.filter(function (a) { return itemDepartment(a) !== importDept; });
-    var byKey = {};
-    inDept.forEach(function (a) { byKey[keyFor(a.name, a.responsible, a.company, a.cnpj)] = a; });
-    var seen = {};
-    var mergedInDept = incoming.map(function (row) {
+  // IMPORT IS ADDITIVE ONLY. Rows already stored — in this month or any other — are never
+  // removed, rewritten or reset: a spreadsheet row that matches an existing activity
+  // (same name, responsible, company and CNPJ, same department and month) is simply
+  // skipped, keeping its status and history untouched. Only rows that do not exist yet
+  // are appended. If a file legitimately repeats identical rows, N repeated rows against
+  // M existing ones add max(0, N - M), so re-uploading the same file adds nothing.
+  function mergeActivities(existing, incoming, importDept, period) {
+    var have = {};
+    existing.forEach(function (a) {
+      if (itemDepartment(a) !== importDept || periodOfItem(a) !== period) return;
+      var k1 = keyFor(a.name, a.responsible, a.company, a.cnpj);
+      have[k1] = (have[k1] || 0) + 1;
+      if (a.importKey && a.importKey !== k1) have[a.importKey] = (have[a.importKey] || 0) + 1;
+    });
+    var added = [], kept = 0;
+    incoming.forEach(function (row) {
       var k = keyFor(row.name, row.responsible, row.company, row.cnpj);
-      seen[k] = true;
-      var prev = byKey[k];
-      return {
-        id: prev ? prev.id : uid(),
+      if (have[k] > 0) { have[k]--; kept++; return; }
+      added.push({
+        id: uid(),
         name: row.name,
         department: importDept,
+        period: period,
         responsible: row.responsible,
         company: row.company,
         cnpj: row.cnpj,
         municipio: row.municipio,
         estado: row.estado,
         dueDate: row.dueDate,
-        status: prev ? prev.status : 'pending',
-        completedBy: prev ? prev.completedBy : null,
-        completedAt: prev ? prev.completedAt : null,
-        comment: prev ? prev.comment : null,
-        hadGuide: prev ? prev.hadGuide : null,
-        guideSent: prev ? prev.guideSent : null,
-        startedAt: prev ? prev.startedAt : null,
-        startedBy: prev ? prev.startedBy : null,
-        audit: prev ? (prev.audit || []) : []
-      };
+        status: 'pending',
+        completedBy: null,
+        completedAt: null,
+        comment: null,
+        hadGuide: null,
+        guideSent: null,
+        startedAt: null,
+        startedBy: null,
+        audit: [],
+        importKey: k
+      });
     });
-    var removed = inDept.filter(function (a) { return !seen[keyFor(a.name, a.responsible, a.company, a.cnpj)]; });
-    var addedCount = 0;
-    incoming.forEach(function (row) {
-      if (!byKey[keyFor(row.name, row.responsible, row.company, row.cnpj)]) addedCount++;
-    });
-    return { merged: outDept.concat(mergedInDept), addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
+    return { merged: existing.concat(added), added: added, addedCount: added.length, keptCount: kept, removedCount: 0, period: period };
   }
 
   // ---------- metas (goals) ----------
@@ -1437,36 +1939,33 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     return { items: items, detected: cols, monthFirstFixed: monthFirstFixed };
   }
 
-  // Same department-scoping as mergeActivities — see the comment there.
-  function mergeGoals(existing, incoming, importDept) {
-    var inDept = existing.filter(function (g) { return itemDepartment(g) === importDept; });
-    var outDept = existing.filter(function (g) { return itemDepartment(g) !== importDept; });
-    var byKey = {};
-    inDept.forEach(function (g) { byKey[goalKeyFor(g.name, g.responsible, g.company)] = g; });
-    var seen = {};
-    var mergedInDept = incoming.map(function (row) {
+  // Additive, exactly like mergeActivities: existing goals (and their progress) are never touched.
+  function mergeGoals(existing, incoming, importDept, period) {
+    var have = {};
+    existing.forEach(function (g) {
+      if (itemDepartment(g) !== importDept || periodOfItem(g) !== period) return;
+      var k1 = goalKeyFor(g.name, g.responsible, g.company);
+      have[k1] = (have[k1] || 0) + 1;
+    });
+    var added = [], kept = 0;
+    incoming.forEach(function (row) {
       var k = goalKeyFor(row.name, row.responsible, row.company);
-      seen[k] = true;
-      var prev = byKey[k];
-      return {
-        id: prev ? prev.id : uid(),
+      if (have[k] > 0) { have[k]--; kept++; return; }
+      added.push({
+        id: uid(),
         name: row.name,
         department: importDept,
+        period: period,
         responsible: row.responsible,
         company: row.company,
         target: row.target,
-        current: prev ? prev.current : 0,
+        current: 0,
         dueDate: row.dueDate,
-        lastUpdatedBy: prev ? prev.lastUpdatedBy : null,
-        lastUpdatedAt: prev ? prev.lastUpdatedAt : null
-      };
+        lastUpdatedBy: null,
+        lastUpdatedAt: null
+      });
     });
-    var removed = inDept.filter(function (g) { return !seen[goalKeyFor(g.name, g.responsible, g.company)]; });
-    var addedCount = 0;
-    incoming.forEach(function (row) {
-      if (!byKey[goalKeyFor(row.name, row.responsible, row.company)]) addedCount++;
-    });
-    return { merged: outDept.concat(mergedInDept), addedCount: addedCount, keptCount: incoming.length - addedCount, removedCount: removed.length };
+    return { merged: existing.concat(added), added: added, addedCount: added.length, keptCount: kept, removedCount: 0, period: period };
   }
 
   // ---------- modal / toast ----------
@@ -1650,6 +2149,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         id: uid(),
         name: name,
         department: admin ? document.getElementById('newActDept').value : userDepartment(user),
+        period: newItemPeriod(document.getElementById('newActDue').value.trim()),
         responsible: document.getElementById('newActResp').value.trim(),
         company: document.getElementById('newActCompany').value.trim(),
         cnpj: document.getElementById('newActCnpj').value.trim(),
@@ -1736,6 +2236,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         id: uid(),
         name: name,
         department: goalAdmin ? document.getElementById('newGoalDept').value : userDepartment(goalUser),
+        period: newItemPeriod(document.getElementById('newGoalDue').value.trim()),
         responsible: document.getElementById('newGoalResp').value.trim(),
         company: document.getElementById('newGoalCompany').value.trim(),
         target: target,
@@ -1797,6 +2298,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function handleGoalFile(file) {
+    var user = getCurrentUser();
+    if (!isAdmin(user)) return;
     var blockedReason = writeBlockedReason();
     if (blockedReason) { showToast(blockedReason, 'warn'); return; }
     var reader = new FileReader();
@@ -1809,41 +2312,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         return;
       }
       if (parsed.error) { showToast(parsed.error, 'error'); return; }
-      var merge = mergeGoals(STATE.goals, parsed.items, pendingImportDept);
-      openGoalImportPreview(parsed, merge, function (confirmed) {
-        if (!confirmed) return;
-        STATE.goals = merge.merged;
-        persist();
-      });
+      openImportPreview('goals', parsed, pendingImportDept, file.name);
     };
     reader.onerror = function () { showToast('Não foi possível ler o arquivo.', 'error'); };
     reader.readAsArrayBuffer(file);
-  }
-
-  function openGoalImportPreview(parsed, merge, cb) {
-    var warnings = '';
-    if (!parsed.detected.responsible) warnings += '<li>Coluna de responsável não encontrada — as metas ficarão sem responsável.</li>';
-    if (!parsed.detected.company) warnings += '<li>Coluna de empresa não encontrada — as metas ficarão agrupadas em "Sem empresa".</li>';
-    if (!parsed.detected.target) warnings += '<li>Coluna de quantidade alvo não encontrada — as metas ficarão com alvo 0.</li>';
-    if (!parsed.detected.dueDate) warnings += '<li>Coluna de prazo não encontrada.</li>';
-    if (parsed.monthFirstFixed) warnings += '<li>A coluna de prazo desta planilha estava no formato mês/dia (ex.: 8/13 = 13 de agosto) — as datas foram convertidas automaticamente para dia/mês/ano.</li>';
-    openModal(
-      '<h3>Confirmar importação de metas</h3>' +
-      '<p>Departamento: <strong>' + departmentLabel(pendingImportDept) + '</strong></p>' +
-      '<p>Revise o resumo antes de aplicar as mudanças. O progresso já registrado de metas existentes é mantido.</p>' +
-      '<ul class="import-summary">' +
-      '<li><span>Metas novas</span><strong class="mono">' + merge.addedCount + '</strong></li>' +
-      '<li><span>Mantidas (progresso preservado)</span><strong class="mono">' + merge.keptCount + '</strong></li>' +
-      '<li><span>Removidas (fora da planilha)</span><strong class="mono">' + merge.removedCount + '</strong></li>' +
-      '</ul>' +
-      (warnings ? '<div class="import-warning"><ul style="margin:0;padding-left:18px;">' + warnings + '</ul></div>' : '') +
-      '<div class="modal-actions">' +
-      '<button class="btn btn-ghost" id="goalImportCancel" type="button">Cancelar</button>' +
-      '<button class="btn btn-primary" id="goalImportConfirm" type="button">Aplicar alterações</button>' +
-      '</div>'
-    );
-    document.getElementById('goalImportCancel').addEventListener('click', function () { closeModal(); cb(false); });
-    document.getElementById('goalImportConfirm').addEventListener('click', function () { closeModal(); cb(true); });
   }
 
   // ---------- mark as delivered: comment + guia flags ----------
@@ -1917,31 +2389,169 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     });
   }
 
-  function openImportPreview(parsed, merge, cb) {
+  // Period options for the import dialog: every month that already has data, plus a
+  // window around today, so "next month's sheet" can be filed under a month that does not exist yet.
+  function importPeriodOptions(selected) {
+    var seen = {};
+    allPeriods().forEach(function (p) { seen[p] = true; });
+    var t = new Date();
+    for (var i = -6; i <= 6; i++) {
+      var d = new Date(t.getFullYear(), t.getMonth() + i, 1);
+      seen[d.getFullYear() + '-' + pad2(d.getMonth() + 1)] = true;
+    }
+    seen[selected] = true;
+    return Object.keys(seen).sort().reverse().map(function (p) {
+      return '<option value="' + p + '"' + (p === selected ? ' selected' : '') + '>' + escapeHtml(periodLabel(p)) + '</option>';
+    }).join('');
+  }
+
+  // The month most rows of the file are due in — used as the default import period.
+  function guessImportPeriod(items) {
+    var counts = {}, best = null;
+    items.forEach(function (it) {
+      var p = periodOfDueDate(it.dueDate);
+      if (!p) return;
+      counts[p] = (counts[p] || 0) + 1;
+      if (best === null || counts[p] > counts[best]) best = p;
+    });
+    if (best) return best;
+    var r = resolvedPeriod();
+    return r === 'all' ? currentPeriod() : r;
+  }
+
+  function openImportPreview(kind, parsed, dept, fileName) {
+    var isGoals = kind === 'goals';
+    var noun = isGoals ? 'metas' : 'atividades';
     var warnings = '';
-    if (!parsed.detected.responsible) warnings += '<li>Coluna de responsável não encontrada — as atividades ficarão sem responsável.</li>';
-    if (!parsed.detected.company) warnings += '<li>Coluna de empresa não encontrada — as atividades ficarão agrupadas em "Sem empresa".</li>';
-    if (!parsed.detected.cnpj) warnings += '<li>Coluna de CNPJ não encontrada.</li>';
+    if (!parsed.detected.responsible) warnings += '<li>Coluna de responsável não encontrada — ficarão sem responsável.</li>';
+    if (!parsed.detected.company) warnings += '<li>Coluna de empresa não encontrada — ficarão agrupadas em "Sem empresa".</li>';
+    if (isGoals && !parsed.detected.target) warnings += '<li>Coluna de quantidade alvo não encontrada — as metas ficarão com alvo 0.</li>';
+    if (!isGoals && !parsed.detected.cnpj) warnings += '<li>Coluna de CNPJ não encontrada.</li>';
     if (!parsed.detected.dueDate) warnings += '<li>Coluna de prazo não encontrada — não será possível saber o que está em atraso.</li>';
-    if (parsed.monthFirstFixed) warnings += '<li>A coluna de prazo desta planilha estava no formato mês/dia (ex.: 8/13 = 13 de agosto) — as datas foram convertidas automaticamente para dia/mês/ano.</li>';
+    if (parsed.monthFirstFixed) warnings += '<li>A coluna de prazo estava no formato mês/dia (ex.: 8/13 = 13 de agosto) — as datas foram convertidas para dia/mês/ano.</li>';
+    var period = guessImportPeriod(parsed.items);
+
+    function compute(p) {
+      return isGoals ? mergeGoals(STATE.goals, parsed.items, dept, p) : mergeActivities(STATE.activities, parsed.items, dept, p);
+    }
+    function summaryHtml(m) {
+      return '<li><span>' + (isGoals ? 'Metas novas' : 'Atividades novas') + ' (serão adicionadas)</span><strong class="mono">' + m.addedCount + '</strong></li>' +
+        '<li><span>Já existiam neste mês (ignoradas, nada muda)</span><strong class="mono">' + m.keptCount + '</strong></li>' +
+        '<li><span>Apagadas</span><strong class="mono">0</strong></li>';
+    }
+
+    var m0 = compute(period);
     openModal(
-      '<h3>Confirmar importação</h3>' +
-      '<p>Departamento: <strong>' + departmentLabel(pendingImportDept) + '</strong></p>' +
-      '<p>Revise o resumo antes de aplicar as mudanças. Todos que têm esta página aberta verão a lista atualizada.</p>' +
-      '<ul class="import-summary">' +
-      '<li><span>Atividades novas</span><strong class="mono">' + merge.addedCount + '</strong></li>' +
-      '<li><span>Mantidas (status preservado)</span><strong class="mono">' + merge.keptCount + '</strong></li>' +
-      '<li><span>Removidas (fora da planilha)</span><strong class="mono">' + merge.removedCount + '</strong></li>' +
-      '</ul>' +
+      '<h3>Confirmar importação' + (isGoals ? ' de metas' : '') + '</h3>' +
+      '<p>Departamento: <strong>' + escapeHtml(departmentLabel(dept)) + '</strong>' + (fileName ? ' · Arquivo: ' + escapeHtml(fileName) : '') + '</p>' +
+      '<label class="field-label" for="importPeriodSel">Mês de referência (histórico)</label>' +
+      '<select id="importPeriodSel">' + importPeriodOptions(period) + '</select>' +
+      '<div class="import-safe">🔒 Nada será apagado nem sobrescrito. O que já está cadastrado — deste mês ou de meses anteriores — continua exatamente como está, com status e histórico. Um backup é guardado antes de aplicar.</div>' +
+      '<ul class="import-summary" id="importSummaryList">' + summaryHtml(m0) + '</ul>' +
       (warnings ? '<div class="import-warning"><ul style="margin:0;padding-left:18px;">' + warnings + '</ul></div>' : '') +
       '<div class="modal-actions">' +
       '<button class="btn btn-ghost" id="importCancel" type="button">Cancelar</button>' +
-      '<button class="btn btn-primary" id="importConfirm" type="button">Aplicar alterações</button>' +
+      '<button class="btn btn-primary" id="importConfirm" type="button">Adicionar ' + noun + '</button>' +
       '</div>'
     );
-    document.getElementById('importCancel').addEventListener('click', function () { closeModal(); cb(false); });
-    document.getElementById('importConfirm').addEventListener('click', function () { closeModal(); cb(true); });
+    var sel = document.getElementById('importPeriodSel');
+    sel.addEventListener('change', function () {
+      period = sel.value;
+      document.getElementById('importSummaryList').innerHTML = summaryHtml(compute(period));
+    });
+    document.getElementById('importCancel').addEventListener('click', closeModal);
+    document.getElementById('importConfirm').addEventListener('click', function () {
+      var btn = document.getElementById('importConfirm');
+      btn.disabled = true;
+      applyImport(kind, parsed, dept, period, fileName);
+    });
   }
+
+  function applyImport(kind, parsed, dept, period, fileName) {
+    var isGoals = kind === 'goals';
+    var user = getCurrentUser();
+    var importId = 'imp' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    runSafeMutation(function (remote) {
+      var m = isGoals
+        ? mergeGoals(remote.goals, parsed.items, dept, period)
+        : mergeActivities(remote.activities, parsed.items, dept, period);
+      m.added.forEach(function (it) { it.importId = importId; });
+      if (isGoals) remote.goals = m.merged; else remote.activities = m.merged;
+      remote.importLog = (remote.importLog || []).concat([{
+        id: importId, at: new Date().toISOString(), by: user ? user.name : null,
+        kind: isGoals ? 'goals' : 'activities', dept: dept, period: period,
+        file: fileName || '', added: m.addedCount, kept: m.keptCount
+      }]).slice(-60);
+      return m;
+    }, { backup: true, reason: 'importacao' }).then(function (out) {
+      closeModal();
+      setActivePeriod(period);
+      refreshFilterOptions(false);
+      render();
+      var m = out.result;
+      showToast('Importação concluída: ' + m.addedCount + ' nova(s), ' + m.keptCount + ' já existia(m). Nada foi apagado.' +
+        (out.backedUp ? '' : ' (backup automático indisponível — use "Backup").'));
+    }).catch(function () {
+      closeModal();
+      showToast('Não foi possível importar agora. Nada foi alterado — tente novamente em instantes.', 'error');
+    });
+  }
+
+  // Admin: list of past imports, each with an "undo" that removes ONLY the rows that import
+  // added and that nobody has touched since (still pending, never started/edited). Anything
+  // already worked on stays.
+  function openImportHistoryModal() {
+    var log = (STATE.importLog || []).slice().reverse();
+    var rows = log.map(function (e) {
+      var undone = e.undoneAt ? '<span class="muted"> · desfeita em ' + fmtDateTime(e.undoneAt) + ' (' + (e.undoneCount || 0) + ' removida(s))</span>' : '';
+      var btn = e.undoneAt ? '' : '<button class="btn btn-ghost btn-sm" type="button" data-undo-import="' + escapeHtml(e.id) + '">Desfazer</button>';
+      return '<li><div><strong>' + escapeHtml(periodLabel(e.period)) + '</strong> · ' + escapeHtml(departmentLabel(e.dept)) +
+        ' · ' + (e.kind === 'goals' ? 'metas' : 'atividades') + '<br><small class="muted">' + fmtDateTime(e.at) + ' por ' + escapeHtml(e.by || '—') +
+        (e.file ? ' · ' + escapeHtml(e.file) : '') + ' · ' + e.added + ' nova(s), ' + e.kept + ' já existia(m)</small>' + undone + '</div>' + btn + '</li>';
+    }).join('');
+    openModal(
+      '<h3>Histórico de importações</h3>' +
+      '<p>"Desfazer" remove somente as linhas que aquela importação criou e que ainda não foram iniciadas, editadas ou finalizadas por ninguém.</p>' +
+      '<ul class="userlist import-log">' + (rows || '<li class="muted" style="justify-content:center;">Nenhuma importação registrada ainda</li>') + '</ul>' +
+      '<div class="modal-actions"><button class="btn btn-ghost" id="importHistClose" type="button">Fechar</button></div>'
+    );
+    document.getElementById('importHistClose').addEventListener('click', closeModal);
+    var list = document.querySelector('#modalRoot .import-log');
+    list.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-undo-import]') : null;
+      if (!b) return;
+      undoImport(b.getAttribute('data-undo-import'));
+    });
+  }
+
+  function undoImport(importId) {
+    var blocked = writeBlockedReason();
+    if (blocked) { showToast(blocked, 'warn'); return; }
+    runSafeMutation(function (remote) {
+      var entry = (remote.importLog || []).filter(function (e) { return e.id === importId; })[0];
+      if (!entry || entry.undoneAt) throw new Error('nothing-to-undo');
+      var removed = 0;
+      if (entry.kind === 'goals') {
+        remote.goals = remote.goals.filter(function (g) {
+          if (g.importId === importId && !(g.current > 0)) { removed++; return false; }
+          return true;
+        });
+      } else {
+        remote.activities = remote.activities.filter(function (a) {
+          var untouched = a.status === 'pending' && !(a.audit && a.audit.length) && !(a.edits && a.edits.length);
+          if (a.importId === importId && untouched) { removed++; return false; }
+          return true;
+        });
+      }
+      entry.undoneAt = new Date().toISOString();
+      entry.undoneCount = removed;
+      return removed;
+    }, { backup: true, reason: 'desfazer-importacao' }).then(function (out) {
+      showToast('Importação desfeita: ' + out.result + ' linha(s) removida(s). O que já tinha sido trabalhado foi mantido.');
+      openImportHistoryModal();
+    }).catch(function () { showToast('Não foi possível desfazer agora.', 'error'); });
+  }
+
 
   // ---------- calendar ----------
 
@@ -2052,7 +2662,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function dashboardBuckets(userName) {
-    var all = STATE.activities;
+    var all = periodScoped(STATE.activities);
     var assigned = all.filter(function (a) { return nameMatchesResponsible(userName, a); });
     var deliveredByThem = all.filter(function (a) {
       return a.status === 'done' && a.completedBy && normalize(a.completedBy) === normalize(userName);
@@ -2631,7 +3241,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var btn = document.getElementById('themeToggleBtn');
     if (btn) {
       var isDark = resolved === 'dark';
-      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.innerHTML = ico(isDark ? 'sun' : 'moon');
       btn.title = isDark ? 'Mudar para tema claro' : 'Mudar para tema escuro';
       btn.setAttribute('aria-label', btn.title);
     }
@@ -2736,6 +3346,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     renderHeader();
     renderViewerBadge();
     updateStatusBanner();
+    renderPeriodBars();
     var blocked = !!writeBlockedReason();
     document.getElementById('navDashboard').hidden = !admin;
 
@@ -2754,8 +3365,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       renderSummary();
       renderList();
       document.getElementById('filterDept').hidden = !admin;
-      document.getElementById('importBtn').hidden = !admin;
+      document.getElementById('importBtn').hidden = !user;
       document.getElementById('importBtn').disabled = blocked;
+      document.getElementById('backupBtn').hidden = !admin;
+      document.getElementById('importHistoryBtn').hidden = !admin;
       document.getElementById('manageUsersBtn').hidden = !admin;
       document.getElementById('manageUsersBtn').disabled = blocked;
       document.getElementById('addActivityBtn').hidden = !user;
@@ -2793,19 +3406,19 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     renderBrandTitle();
     var sub;
     if (currentView === 'metas') {
-      var ng = visibleGoalsRaw().length;
-      sub = ng + (ng === 1 ? ' meta' : ' metas');
+      var ng = periodScoped(visibleGoalsRaw()).length;
+      sub = ng + (ng === 1 ? ' meta' : ' metas') + ' • ' + periodLabel(resolvedPeriod());
     } else if (currentView === 'tickets') {
       var nt = ticketsForCurrentUserAndDate().length;
       sub = 'Meu Dia • ' + nt + (nt === 1 ? ' ticket' : ' tickets');
       document.getElementById('headerSubtitle').textContent = sub;
       return;
     } else if (currentView === 'dashboard') {
-      document.getElementById('headerSubtitle').textContent = 'Dashboard por colaborador • desempenho individual';
+      document.getElementById('headerSubtitle').textContent = 'Dashboard por colaborador • ' + periodLabel(resolvedPeriod());
       return;
     } else {
-      var n = visibleActivitiesRaw().length;
-      sub = n + (n === 1 ? ' atividade' : ' atividades');
+      var n = periodScoped(visibleActivitiesRaw()).length;
+      sub = n + (n === 1 ? ' atividade' : ' atividades') + ' • ' + periodLabel(resolvedPeriod());
     }
     if (STATE.updatedAt) sub += ' • atualizado em ' + fmtDateTime(STATE.updatedAt);
     document.getElementById('headerSubtitle').textContent = sub;
@@ -2818,22 +3431,20 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
   }
 
   function renderGoalsSummary() {
-    var scopedGoals = visibleGoalsRaw();
+    var scopedGoals = periodScoped(visibleGoalsRaw());
     var total = scopedGoals.length;
     var done = scopedGoals.filter(isGoalComplete).length;
     var overdue = scopedGoals.filter(isGoalOverdue).length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     var html =
-      '<div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
-      '<div class="summary-stats">' +
-      '<div class="summary-stat"><strong>' + done + '</strong><span>Concluídas</span></div>' +
-      '<div class="summary-stat"><strong>' + (total - done) + '</strong><span>Em andamento</span></div>' +
-      '<div class="summary-stat summary-stat-danger"><strong>' + overdue + '</strong><span>Atrasadas</span></div>' +
-      '<div class="summary-stat"><strong>' + total + '</strong><span>Total</span></div>' +
-      '</div>' +
-      '<div class="summary-bar-wrap">' +
-      '<div class="summary-bar"><div class="summary-bar-fill" style="width:' + pct + '%"></div></div>' +
-      '<p class="summary-caption">' + done + ' de ' + total + ' metas concluídas</p>' +
+      '<div class="kpi-grid">' +
+      '<div class="kpi kpi-hero"><div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
+      '<div class="kpi-hero-text"><strong>' + done + ' de ' + total + '</strong><span>metas concluídas</span>' +
+      '<div class="summary-bar"><div class="summary-bar-fill" style="width:' + pct + '%"></div></div></div></div>' +
+      '<div class="kpi kpi-done"><span>Concluídas</span><strong>' + done + '</strong></div>' +
+      '<div class="kpi kpi-progress"><span>Em andamento</span><strong>' + (total - done) + '</strong></div>' +
+      '<div class="kpi kpi-danger"><span>Atrasadas</span><strong>' + overdue + '</strong></div>' +
+      '<div class="kpi"><span>Total</span><strong>' + total + '</strong></div>' +
       '</div>';
     document.getElementById('goalsSummaryCard').innerHTML = html;
   }
@@ -2889,9 +3500,9 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         '<p>Clique em "+ Nova meta" ou em "Importar planilha de metas" para começar.</p></div>';
       return;
     }
-    var scopedGoals = visibleGoalsRaw();
+    var scopedGoals = periodScoped(visibleGoalsRaw());
     if (!scopedGoals.length) {
-      root.innerHTML = '<div class="empty-state"><h3>Nenhuma meta no seu departamento ainda</h3><p>Quando alguma meta for cadastrada no seu departamento, ela aparece aqui.</p></div>';
+      root.innerHTML = '<div class="empty-state"><h3>Nenhuma meta neste período</h3><p>Escolha outro mês no seletor de período ou cadastre/importe metas.</p></div>';
       return;
     }
     var text = normalize(document.getElementById('goalSearchInput').value);
@@ -2943,7 +3554,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function renderSummary() {
     var admin = isAdmin(getCurrentUser());
-    var scopedActivities = visibleActivitiesRaw();
+    var scopedActivities = periodScoped(visibleActivitiesRaw());
     var total = scopedActivities.length;
     var done = scopedActivities.filter(function (a) { return a.status === 'done'; }).length;
     var inProgress = scopedActivities.filter(function (a) { return a.status === 'in_progress' && !isOverdue(a); }).length;
@@ -2954,21 +3565,19 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     var prevOverdue = lastSummaryVals.overdue === null ? 0 : lastSummaryVals.overdue;
     var prevTotal = lastSummaryVals.total === null ? 0 : lastSummaryVals.total;
     var html =
-      '<div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
-      '<div class="summary-stats">' +
-      '<div class="summary-stat"><strong id="summaryDoneVal">' + prevDone + '</strong><span>Finalizadas</span></div>' +
-      '<div class="summary-stat"><strong id="summaryProgVal">' + prevInProgress + '</strong><span>Em andamento</span></div>' +
-      '<div class="summary-stat summary-stat-danger"><strong id="summaryOverdueVal">' + prevOverdue + '</strong><span>Atrasadas</span></div>' +
-      '<div class="summary-stat"><strong id="summaryTotalVal">' + prevTotal + '</strong><span>Total</span></div>' +
-      '</div>' +
-      '<div class="summary-bar-wrap">' +
-      '<div class="summary-bar"><div class="summary-bar-fill" style="width:' + pct + '%"></div></div>' +
-      '<p class="summary-caption">' + done + ' de ' + total + ' atividades finalizadas</p>' +
-      '</div>' +
       '<div class="summary-actions">' +
-      (admin ? '<button class="btn btn-ghost" type="button" id="openReportBtn">📊 Relatório</button>' : '') +
-      '<button class="btn btn-ghost" type="button" id="openCalendarBtn">📅 Calendário</button>' +
-      '<button class="btn btn-ghost" type="button" id="refreshBtn" title="Buscar a versão mais recente que todos estão vendo">🔄 Atualizar</button>' +
+      (admin ? '<button class="btn btn-ghost btn-sm" type="button" id="openReportBtn">' + ico('report') + 'Relatório</button>' : '') +
+      '<button class="btn btn-ghost btn-sm" type="button" id="openCalendarBtn">' + ico('calendar') + 'Calendário</button>' +
+      '<button class="btn btn-ghost btn-sm" type="button" id="refreshBtn" title="Buscar a versão mais recente que todos estão vendo">' + ico('refresh') + 'Atualizar</button>' +
+      '</div>' +
+      '<div class="kpi-grid">' +
+      '<div class="kpi kpi-hero"><div class="summary-ring" style="--pct:' + pct + '"><span class="mono">' + pct + '%</span></div>' +
+      '<div class="kpi-hero-text"><strong>' + done + ' de ' + total + '</strong><span>atividades finalizadas</span>' +
+      '<div class="summary-bar"><div class="summary-bar-fill" style="width:' + pct + '%"></div></div></div></div>' +
+      '<div class="kpi kpi-done"><span>Finalizadas</span><strong id="summaryDoneVal">' + prevDone + '</strong></div>' +
+      '<div class="kpi kpi-progress"><span>Em andamento</span><strong id="summaryProgVal">' + prevInProgress + '</strong></div>' +
+      '<div class="kpi kpi-danger"><span>Atrasadas</span><strong id="summaryOverdueVal">' + prevOverdue + '</strong></div>' +
+      '<div class="kpi"><span>Total</span><strong id="summaryTotalVal">' + prevTotal + '</strong></div>' +
       '</div>';
     document.getElementById('summaryCard').innerHTML = html;
     document.getElementById('openCalendarBtn').addEventListener('click', openCalendarModal);
@@ -3008,7 +3617,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
   function refreshFilterOptions(preserve) {
     var resps = {}, companies = {};
-    visibleActivitiesRaw().forEach(function (a) { resps[respLabel(a)] = true; companies[companyLabel(a)] = true; });
+    periodScoped(visibleActivitiesRaw()).forEach(function (a) { resps[respLabel(a)] = true; companies[companyLabel(a)] = true; });
     fillSelect('filterResp', Object.keys(resps).sort(), 'Todos os responsáveis', preserve);
     fillSelect('filterEmpresa', Object.keys(companies).sort(), 'Todas as empresas', preserve);
   }
@@ -3029,7 +3638,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       resp: document.getElementById('filterResp').value,
       company: document.getElementById('filterEmpresa').value,
       dept: deptEl ? deptEl.value : 'all',
-      status: document.getElementById('filterStatus').value
+      status: document.getElementById('filterStatus').value,
+      period: resolvedPeriod()
     };
   }
 
@@ -3042,6 +3652,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     if (f.resp !== 'all' && respLabel(act) !== f.resp) return false;
     if (f.company !== 'all' && companyLabel(act) !== f.company) return false;
     if (f.dept && f.dept !== 'all' && itemDepartment(act) !== f.dept) return false;
+    if (f.period && f.period !== 'all' && periodOfItem(act) !== f.period) return false;
     if (f.text) {
       var hay = normalize(act.name + ' ' + act.responsible + ' ' + act.company + ' ' + act.cnpj + ' ' + act.municipio);
       if (hay.indexOf(f.text) === -1) return false;
@@ -3079,8 +3690,9 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       status = '<span class="status-pending">Pendente</span>';
     }
 
-    var auditBtn = (admin && act.audit && act.audit.length)
-      ? '<button class="row-audit-btn" type="button" data-action="view-audit" data-id="' + act.id + '">🕒 Auditoria (' + act.audit.length + ')</button>'
+    var histCount = ((act.audit && act.audit.length) || 0) + ((act.edits && act.edits.length) || 0);
+    var auditBtn = (admin && histCount)
+      ? '<button class="row-audit-btn" type="button" data-action="view-audit" data-id="' + act.id + '">' + ico('history') + 'Histórico (' + histCount + ')</button>'
       : '';
 
     var flags = '';
@@ -3124,9 +3736,13 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         (selectedIds[act.id] ? ' checked' : '') + (blocked ? ' disabled' : '') +
         ' aria-label="Selecionar atividade ' + escapeHtml(act.name) + '">'
       : '';
+    var editBtn = currentUser
+      ? '<button class="row-edit" type="button" data-action="edit-row" data-id="' + act.id + '"' +
+        (blocked ? ' disabled' : '') + ' title="Editar nome ou prazo" aria-label="Editar nome ou prazo">' + ico('edit') + 'Editar</button>'
+      : '';
     var deleteBtn = admin
       ? '<button class="row-delete" type="button" data-action="delete-row" data-id="' + act.id + '"' +
-        (blocked ? ' disabled' : '') + ' title="Excluir atividade" aria-label="Excluir atividade">🗑 Excluir</button>'
+        (blocked ? ' disabled' : '') + ' title="Excluir atividade" aria-label="Excluir atividade">' + ico('trash') + 'Excluir</button>'
       : '';
 
     return (
@@ -3136,9 +3752,77 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       '<span class="toggle-dot"></span></button>' +
       '<div class="row-main"><div class="row-title">' + escapeHtml(act.name) + '</div>' +
       '<div class="row-meta">' + deptChip + resp + locChip + cnpjChip + dueChip + flags + '</div>' + comment + auditBtn + '</div>' +
-      '<div class="row-status">' + status + deleteBtn + '</div>' +
+      '<div class="row-status">' + status + '<div class="row-actions">' + editBtn + deleteBtn + '</div></div>' +
       '</article>'
     );
+  }
+
+  // ---------- list sorting / grouping / status chips ----------
+
+  function statusRank(a) { return isOverdue(a) ? 0 : (a.status === 'in_progress' ? 1 : (a.status === 'pending' ? 2 : 3)); }
+  function statusGroupLabel(a) { return ['Atrasadas', 'Em andamento', 'Pendentes', 'Finalizadas'][statusRank(a)]; }
+
+  function sortActivities(list, mode) {
+    var arr = list.slice();
+    function dueTime(a) { var d = parseDueDate(a.dueDate); return d ? d.getTime() : Infinity; }
+    arr.sort(function (a, b) {
+      if (mode === 'name') return a.name.localeCompare(b.name, 'pt-BR');
+      if (mode === 'status') {
+        var r = statusRank(a) - statusRank(b);
+        if (r) return r;
+      }
+      var da = dueTime(a), db = dueTime(b);
+      if (da !== db) return da < db ? -1 : 1;
+      return a.name.localeCompare(b.name, 'pt-BR');
+    });
+    return arr;
+  }
+
+  function groupActivities(list, mode) {
+    if (mode === 'none') return [{ label: 'Todas as atividades', rows: list }];
+    var groups = {}, order = [];
+    list.forEach(function (a) {
+      var label = mode === 'resp' ? respLabel(a) : (mode === 'status' ? statusGroupLabel(a) : companyLabel(a));
+      if (!groups[label]) { groups[label] = []; order.push(label); }
+      groups[label].push(a);
+    });
+    if (mode === 'status') {
+      var fixed = ['Atrasadas', 'Em andamento', 'Pendentes', 'Finalizadas'];
+      order.sort(function (a, b) { return fixed.indexOf(a) - fixed.indexOf(b); });
+    } else {
+      order.sort(function (a, b) {
+        if (mode === 'resp') {
+          if (a === 'Sem responsável') return 1;
+          if (b === 'Sem responsável') return -1;
+        } else {
+          if (a === 'Todas as empresas') return -1;
+          if (b === 'Todas as empresas') return 1;
+        }
+        return a.localeCompare(b, 'pt-BR');
+      });
+    }
+    return order.map(function (l) { return { label: l, rows: groups[l] }; });
+  }
+
+  function renderStatusChips() {
+    var el = document.getElementById('statusChips');
+    if (!el) return;
+    var f = currentFilters();
+    var current = f.status;
+    f.status = 'all';
+    var base = visibleActivitiesRaw().filter(function (a) { return matchesFilter(a, f); });
+    var counts = {
+      all: base.length,
+      pending: base.filter(function (a) { return a.status === 'pending'; }).length,
+      in_progress: base.filter(function (a) { return a.status === 'in_progress'; }).length,
+      overdue: base.filter(isOverdue).length,
+      done: base.filter(function (a) { return a.status === 'done'; }).length
+    };
+    var defs = [['all', 'Todas'], ['pending', 'Pendentes'], ['in_progress', 'Em andamento'], ['overdue', 'Atrasadas'], ['done', 'Finalizadas']];
+    el.innerHTML = defs.map(function (d) {
+      return '<button type="button" class="status-chip chip-' + d[0] + (current === d[0] ? ' is-active' : '') + '" data-status="' + d[0] + '">' +
+        d[1] + ' <span class="status-chip-count">' + counts[d[0]] + '</span></button>';
+    }).join('');
   }
 
   function pruneSelection() {
@@ -3152,6 +3836,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     pruneSelection();
     var admin = isAdmin(getCurrentUser());
     refreshFilterOptions(true);
+    renderStatusChips();
     if (!STATE.activities.length) {
       root.innerHTML =
         '<div class="empty-state"><h3>Nenhuma atividade importada ainda</h3>' +
@@ -3160,9 +3845,9 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       updateDeleteSelectedButton();
       return;
     }
-    var scoped = visibleActivitiesRaw();
+    var scoped = periodScoped(visibleActivitiesRaw());
     if (!scoped.length) {
-      root.innerHTML = '<div class="empty-state"><h3>Nenhuma atividade no seu departamento ainda</h3><p>Quando alguma atividade for cadastrada no seu departamento, ela aparece aqui.</p></div>';
+      root.innerHTML = '<div class="empty-state"><h3>Nenhuma atividade neste período</h3><p>Escolha outro mês no seletor de período, ou importe uma planilha / crie uma atividade para ' + escapeHtml(periodLabel(resolvedPeriod())) + '.</p></div>';
       syncSelectAllCheckbox([]);
       updateDeleteSelectedButton();
       return;
@@ -3175,25 +3860,22 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       updateDeleteSelectedButton();
       return;
     }
-    var groups = {};
-    var order = [];
-    visible.forEach(function (a) {
-      var company = companyLabel(a);
-      if (!groups[company]) { groups[company] = []; order.push(company); }
-      groups[company].push(a);
-    });
-    order.sort(function (a, b) {
-      if (a === 'Todas as empresas') return -1;
-      if (b === 'Todas as empresas') return 1;
-      return a.localeCompare(b, 'pt-BR');
-    });
-    var html = order.map(function (company) {
-      var rows = groups[company];
+    var grouped = groupActivities(sortActivities(visible, viewSettings.sort), viewSettings.group);
+    lastGroupKeys = grouped.map(function (gr) { return viewSettings.group + '|' + gr.label; });
+    var html = grouped.map(function (gr) {
+      var rows = gr.rows;
       var done = rows.filter(function (a) { return a.status === 'done'; }).length;
+      var gpct = rows.length ? Math.round(done / rows.length * 100) : 0;
+      var gkey = viewSettings.group + '|' + gr.label;
+      var collapsed = !!collapsedGroups[gkey];
       return (
-        '<section class="cat-group"><div class="cat-header"><h2>' + escapeHtml(company) + '</h2>' +
-        '<span class="cat-progress mono">' + done + '/' + rows.length + '</span></div>' +
-        '<div class="cat-rows">' + rows.map(function (a) { return renderRow(a, admin); }).join('') + '</div></section>'
+        '<section class="cat-group' + (collapsed ? ' is-collapsed' : '') + '">' +
+        '<button type="button" class="cat-header" data-action="toggle-group" data-group="' + escapeHtml(gkey) + '" aria-expanded="' + (!collapsed) + '">' +
+        '<span class="cat-chevron">' + ico('chevron') + '</span><span class="cat-title">' + escapeHtml(gr.label) + '</span>' +
+        '<span class="cat-bar"><i style="width:' + gpct + '%"></i></span>' +
+        '<span class="cat-progress mono">' + done + '/' + rows.length + '</span></button>' +
+        (collapsed ? '' : '<div class="cat-rows">' + rows.map(function (a) { return renderRow(a, admin); }).join('') + '</div>') +
+        '</section>'
       );
     }).join('');
     root.innerHTML = html;
@@ -3282,9 +3964,14 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     showToast('Atividade voltou para pendente.', 'success');
   }
 
+  // Anyone logged in can upload activities. Non-admins always import into their own
+  // department (no picker); admins choose the department first.
   function handleFile(file) {
+    var user = getCurrentUser();
+    if (!user) return;
     var blockedReason = writeBlockedReason();
     if (blockedReason) { showToast(blockedReason, 'warn'); return; }
+    var dept = isAdmin(user) ? pendingImportDept : userDepartment(user);
     var reader = new FileReader();
     reader.onload = function (evt) {
       var parsed;
@@ -3295,16 +3982,76 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         return;
       }
       if (parsed.error) { showToast(parsed.error, 'error'); return; }
-      var merge = mergeActivities(STATE.activities, parsed.items, pendingImportDept);
-      openImportPreview(parsed, merge, function (confirmed) {
-        if (!confirmed) return;
-        STATE.activities = merge.merged;
-        refreshFilterOptions(false);
-        persist();
-      });
+      openImportPreview('activities', parsed, dept, file.name);
     };
     reader.onerror = function () { showToast('Não foi possível ler o arquivo.', 'error'); };
     reader.readAsArrayBuffer(file);
+  }
+
+  // ---------- edit name / deadline (everyone) ----------
+
+  function dueToInputValue(str) {
+    var d = parseDueDate(str);
+    return d ? d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) : '';
+  }
+  function inputValueToDue(v) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || '');
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : '';
+  }
+
+  function requestEditActivity(id) {
+    var user = getCurrentUser();
+    if (!user) return;
+    var blockedReason = writeBlockedReason();
+    if (blockedReason) { showToast(blockedReason, 'warn'); return; }
+    var act = STATE.activities.filter(function (a) { return a.id === id; })[0];
+    if (!act) return;
+    var initialDue = dueToInputValue(act.dueDate);
+    openModal(
+      '<h3>Editar atividade</h3>' +
+      '<p class="muted">Todos podem corrigir o nome e o prazo. A alteração fica registrada com seu nome e a data.</p>' +
+      '<form id="editActivityForm">' +
+      '<label class="field-label" for="editActName">Nome da atividade</label>' +
+      '<input type="text" id="editActName" maxlength="200" autocomplete="off" value="' + escapeHtml(act.name) + '">' +
+      '<div class="field-error" id="editActNameError">Informe o nome da atividade.</div>' +
+      '<label class="field-label" for="editActDue">Prazo</label>' +
+      '<input type="date" id="editActDue" value="' + initialDue + '">' +
+      (act.dueDate && !initialDue ? '<p class="muted" style="margin:6px 0 0;">Prazo atual: "' + escapeHtml(act.dueDate) + '" (texto livre). Escolha uma data para substituir; deixe em branco para manter.</p>' : '') +
+      '<div class="modal-actions">' +
+      '<button class="btn btn-ghost" type="button" id="editActCancel">Cancelar</button>' +
+      '<button class="btn btn-primary" type="submit" id="editActSave">Salvar</button>' +
+      '</div></form>'
+    );
+    document.getElementById('editActName').focus();
+    document.getElementById('editActCancel').addEventListener('click', closeModal);
+    document.getElementById('editActivityForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var newName = document.getElementById('editActName').value.trim();
+      if (!newName) { document.getElementById('editActNameError').classList.add('show'); return; }
+      var dueVal = document.getElementById('editActDue').value;
+      var changeDue = dueVal !== initialDue && !(dueVal === '' && !initialDue);
+      var newDue = changeDue ? inputValueToDue(dueVal) : null;
+      if (newName === act.name && !changeDue) { closeModal(); return; }
+      document.getElementById('editActSave').disabled = true;
+      runSafeMutation(function (remote) {
+        var a = remote.activities.filter(function (x) { return x.id === id; })[0];
+        if (!a) throw new Error('missing');
+        var now = new Date().toISOString();
+        var by = user.name;
+        a.edits = a.edits || [];
+        if (!a.importKey) a.importKey = keyFor(a.name, a.responsible, a.company, a.cnpj);
+        if (newName !== a.name) { a.edits.push({ at: now, by: by, field: 'name', from: a.name, to: newName }); a.name = newName; }
+        if (changeDue && newDue !== (a.dueDate || '')) { a.edits.push({ at: now, by: by, field: 'dueDate', from: a.dueDate || '', to: newDue }); a.dueDate = newDue; }
+        a.edits = a.edits.slice(-30);
+        return a.id;
+      }, { backup: false, reason: 'edicao' }).then(function () {
+        closeModal();
+        showToast('Atividade atualizada.');
+      }).catch(function () {
+        closeModal();
+        showToast('Não foi possível salvar a edição agora. Tente novamente.', 'error');
+      });
+    });
   }
 
   function openActivityAuditModal(act) {
@@ -3316,10 +4063,15 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         '<div><strong>Duração:</strong> ' + formatDuration(e.durationMs) + '</div>' +
         '</li>';
     }).join('');
+    var editRows = (act.edits || []).slice().reverse().map(function (e) {
+      var what = e.field === 'name' ? 'Nome' : 'Prazo';
+      return '<li><div><strong>' + what + ' alterado</strong> por ' + escapeHtml(e.by || '—') + ' em ' + fmtDateTime(e.at) + '</div>' +
+        '<div>de "' + escapeHtml(e.from || '—') + '" para "' + escapeHtml(e.to || '—') + '"</div></li>';
+    }).join('');
     openModal(
-      '<h3>Auditoria de tempo</h3>' +
+      '<h3>Histórico da atividade</h3>' +
       '<p>' + escapeHtml(act.name) + '</p>' +
-      '<ul class="audit-list">' + (rows || '<li class="muted">Nenhum registro ainda.</li>') + '</ul>' +
+      '<ul class="audit-list">' + (rows || (editRows ? '' : '<li class="muted">Nenhum registro ainda.</li>')) + editRows + '</ul>' +
       '<div class="modal-actions"><button class="btn btn-ghost" id="auditClose" type="button">Fechar</button></div>'
     );
     document.getElementById('auditClose').addEventListener('click', closeModal);
@@ -3399,15 +4151,48 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     document.getElementById('filterEmpresa').addEventListener('change', renderList);
     document.getElementById('filterDept').addEventListener('change', renderList);
     document.getElementById('filterStatus').addEventListener('change', renderList);
+    var sortSel = document.getElementById('sortSelect'), groupSel = document.getElementById('groupSelect');
+    sortSel.value = viewSettings.sort;
+    groupSel.value = viewSettings.group;
+    sortSel.addEventListener('change', function () { viewSettings.sort = sortSel.value; saveViewSettings(); renderList(); });
+    groupSel.addEventListener('change', function () { viewSettings.group = groupSel.value; saveViewSettings(); renderList(); });
+    document.getElementById('collapseAllBtn').addEventListener('click', function () {
+      var anyOpen = lastGroupKeys.some(function (k) { return !collapsedGroups[k]; });
+      collapsedGroups = {};
+      if (anyOpen) lastGroupKeys.forEach(function (k) { collapsedGroups[k] = true; });
+      renderList();
+    });
+    document.getElementById('statusChips').addEventListener('click', function (e) {
+      var chip = e.target.closest ? e.target.closest('[data-status]') : null;
+      if (!chip) return;
+      document.getElementById('filterStatus').value = chip.getAttribute('data-status');
+      renderList();
+    });
 
     document.getElementById('importBtn').addEventListener('click', function () {
-      if (!isAdmin(getCurrentUser())) return;
-      openImportDepartmentPicker('activities');
+      var u = getCurrentUser();
+      if (!u) return;
+      if (isAdmin(u)) openImportDepartmentPicker('activities');
+      else document.getElementById('fileInput').click();
     });
     document.getElementById('fileInput').addEventListener('change', function (e) {
       var file = e.target.files[0];
       e.target.value = '';
-      if (file && isAdmin(getCurrentUser())) handleFile(file);
+      if (file && getCurrentUser()) handleFile(file);
+    });
+    document.getElementById('backupBtn').addEventListener('click', function () {
+      if (isAdmin(getCurrentUser())) exportBackup();
+    });
+    document.getElementById('importHistoryBtn').addEventListener('click', function () {
+      if (isAdmin(getCurrentUser())) openImportHistoryModal();
+    });
+    document.addEventListener('click', function (e) {
+      var chip = e.target.closest ? e.target.closest('[data-period]') : null;
+      if (!chip) return;
+      setActivePeriod(chip.getAttribute('data-period'));
+      selectedIds = {};
+      refreshFilterOptions(false);
+      render();
     });
     document.getElementById('manageUsersBtn').addEventListener('click', function () {
       if (!isAdmin(getCurrentUser())) return;
@@ -3433,6 +4218,15 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       if (toggleBtn) { toggleActivity(toggleBtn.getAttribute('data-id')); return; }
       var deleteBtn = e.target.closest ? e.target.closest('[data-action="delete-row"]') : null;
       if (deleteBtn) { requestDeleteActivity(deleteBtn.getAttribute('data-id')); return; }
+      var groupBtn = e.target.closest ? e.target.closest('[data-action="toggle-group"]') : null;
+      if (groupBtn) {
+        var gk = groupBtn.getAttribute('data-group');
+        if (collapsedGroups[gk]) delete collapsedGroups[gk]; else collapsedGroups[gk] = true;
+        renderList();
+        return;
+      }
+      var editBtn = e.target.closest ? e.target.closest('[data-action="edit-row"]') : null;
+      if (editBtn) { requestEditActivity(editBtn.getAttribute('data-id')); return; }
       var unmarkBtn = e.target.closest ? e.target.closest('[data-action="unmark-progress"]') : null;
       if (unmarkBtn) { unmarkProgress(unmarkBtn.getAttribute('data-id')); return; }
       var auditBtn = e.target.closest ? e.target.closest('[data-action="view-audit"]') : null;
